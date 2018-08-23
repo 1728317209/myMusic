@@ -1,0 +1,36 @@
+.Head {
+  display: flex;
+  height: 46px;
+  margin: 0px 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+.Head div {
+  flex: 1;
+}
+.Head div span {
+  padding: 2px;
+}
+.return {
+  font-size: 17px;
+  color: #ff2064;
+  width: 90px;
+  align-items: center;
+}
+.nick {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 18px;
+  color: black;
+  align-items: center;
+}
+.done {
+  text-align: end;
+  font-size: 17px;
+  color: #ff2064;
+  align-items: center;
+}
+.Head img {
+  width: 10.5px;
+  height: 18px;
+}

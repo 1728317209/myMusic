@@ -1,0 +1,81 @@
+.Selection {
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0 15px;
+}
+.Selection .select-div {
+  width: 20%;
+  height: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+.Selection .select-div span {
+  font-size: 12px;
+}
+.Selection .select-div .big-select-btn {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* background-color: #e5e5e5; */
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.Selection .select-div .big-select-btn .small-select-btn {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+@keyframes expand {
+  from {
+    width: 7px;
+    height: 7px;
+  }
+  to {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #e5e5e5;
+  }
+}
+@keyframes shrink {
+  from {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #e5e5e5;
+  }
+  to {
+    width: 7px;
+    height: 7px;
+  }
+}
+.Selection .select-div .big-select-btn .single-true {
+  background-color: #ff2064;
+  animation:expand 100ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:expand 100ms ease; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
+}
+.Selection .select-div .big-select-btn .single-false {
+  background-color: #e5e5e5;
+  animation:shrink 100ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:shrink 100ms ease; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
+}
+.Selection .select-div .big-select-btn .multiple-true {
+  background-color: #e5e5e5;
+  animation:shrink 100ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:shrink 100ms ease; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
+}
+.Selection .select-div .big-select-btn .multiple-false {
+  background-color: #ff2064;
+  animation:expand 100ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:expand 100ms ease; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
+}

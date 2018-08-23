@@ -1,0 +1,75 @@
+.myMusicBody {
+  overflow: auto;
+}
+.TabBarBtn {
+  display: flex;
+  height: 45px;
+  margin: 0px 18px;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 10px;
+}
+.TabBarBtn div {
+  font-size: 17px;
+  color: black;
+}
+.TabBarBtn div span {
+  display: block;
+  font-size: 15px;
+}
+.span-true {
+  color: #ff2064;
+}
+.span-false {
+  color: black;
+}
+.mine {
+  width: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.search {
+  width: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.upload {
+  width: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.TabBarBtn .item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.bottom {
+  line-height: 3px;
+  width: 30px;
+  height: 4px;
+  margin: 0 auto;
+  border-radius: 50px;
+}
+.bottom-true {
+  background-color: #ff2064;
+  box-shadow:0 4px 10px 0 rgba(255,116,159,0.60);
+}
+.bottom-false {
+  background-color: white;
+}
+hr{
+  margin: 0px 0;
+}
+.TabBarBtn img {
+  width: 18px;
+  height: 18px;
+}
