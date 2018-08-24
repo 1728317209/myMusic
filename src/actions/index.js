@@ -59,3 +59,18 @@ export function fetchRecommendInfo(token) {
     }
   };
 }
+
+export function deleteMusic(musicIds) {
+  return {
+    type: ActionTypes.DELETE_MUSIC,
+    musicIds
+  };
+}
+
+export function renameMusic(id, newName) {
+  return {
+    type: ActionTypes.RENAME_MUSIC,
+    id,
+    newName
+  };
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Selection from '../Selection/selection';
 import MusicList from '../MusicList/MusicList';
+import Foot from '../Foot/Foot';
 import './index.css';
 
 export default class TabBarBody extends Component {
@@ -12,7 +13,10 @@ export default class TabBarBody extends Component {
       myMusic,
       recommendMusic,
       selectedMusicIds,
-      onSelectMusic
+      onSelectMusic,
+      onDeleteMusic,
+      onMaskShow,
+      currentMusic
     } = this.props;
 
     if (switchTabFlag === 'mine') {
@@ -28,6 +32,13 @@ export default class TabBarBody extends Component {
             choiceFlag={choiceFlag}
             selectedMusicIds={selectedMusicIds}
             onSelectMusic={onSelectMusic}
+          />
+          <Foot
+            onDeleteMusic={onDeleteMusic}
+            onMaskShow={onMaskShow}
+            choiceFlag={choiceFlag}
+            selectedMusicIds={selectedMusicIds}
+            currentMusic={currentMusic}
           />
         </div>
       );

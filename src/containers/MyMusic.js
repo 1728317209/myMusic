@@ -16,14 +16,19 @@ class MyMusic extends React.Component {
     Actions.fetchRecommendInfo('test80031');
   }
   render() {
-    const { user, myMusic, recommendMusic } = this.props;
-    console.log('bbbbbbbbbbbbb', user, myMusic, recommendMusic);
+    const {
+      user,
+      myMusic,
+      recommendMusic,
+      Actions
+    } = this.props;
     return (
       <div>
         <Music
           user={user}
           myMusic={myMusic}
           recommendMusic={recommendMusic}
+          Actions={Actions}
         />
       </div>
     );
@@ -46,11 +51,12 @@ function mapStateToProps(state) {
     musicEntities
   } = state;
 
+  const myMusicList = myMusic ? myMusic.myMusicList : null;
   return {
     user: mergeEntities(userMids, usersEntities),
     myMusic: {
       ...myMusic,
-      myMusicList: mergeEntities(myMusic.myMusicList, musicEntities)
+      myMusicList: mergeEntities(myMusicList, musicEntities)
     },
     recommendMusic: mergeEntities(recommendMusicList, musicEntities)
   };

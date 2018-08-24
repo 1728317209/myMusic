@@ -29,7 +29,7 @@ export default class RenderMusicList extends Component {
     const { musicList, onSelectMusic } = this.props;
     if (musicList && musicList.length) {
       return musicList.map(music => (
-        <div className="musicListItem" key={music.id} onClick={() => onSelectMusic(music.id)}>
+        <div className="musicListItem" key={music.id} onClick={() => onSelectMusic(music.id, music)}>
           {
             this.renderSelectIconArea(music.id)
           }
@@ -41,7 +41,7 @@ export default class RenderMusicList extends Component {
   };
   render() {
     return (
-      <div className="Music">
+      <div className="MusicList">
         <div className="Music-title">
           <span>{this.props.title}</span>
         </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TabBarBtn from './tabBarBtn';
 import TabBarBody from './tabBarBody';
+import Mask from '../Mask/mask';
 import './index.css';
 
 export default class TabBar extends Component {
@@ -9,7 +10,10 @@ export default class TabBar extends Component {
     this.state = {
       switchTabFlag: 'mine', // 选择的哪一个TabBar,默认选中我的音乐
       choiceFlag: true, // 单选还是多选，true：单选、flase：多选
-      selectedMusicIds: [] // 选中的歌曲ids
+      selectedMusicIds: [], // 选中的歌曲ids
+      currentMusic: null,
+      isMaskActive: false,
+      maskItem: null
     };
   }
 
@@ -22,7 +26,7 @@ export default class TabBar extends Component {
   handleChoice = key => { // 单选还是多选
     if (key && !this.state.choiceFlag) { // 多选转单选
       this.setState({
-        selectedMusicIds: [this.state.selectedMusicIds[0]],
+        selectedMusicIds: this.state.selectedMusicIds.length === 0 ? [] : [this.state.selectedMusicIds[0]],
         choiceFlag: key
       });
     } else {
@@ -32,18 +36,13 @@ export default class TabBar extends Component {
     }
   }
 
-  handleSelectMusic = id => {
+  handleSelectMusic = (id, currentMusic) => {
     const newSelectedMusicIds = [...this.state.selectedMusicIds];
     if (this.state.choiceFlag) { // 如果是单选状态
-      if (newSelectedMusicIds.includes(id)) { // 如果已选中
-        this.setState({
-          selectedMusicIds: []
-        });
-      } else { // 如果未选中
-        this.setState({
-          selectedMusicIds: [id]
-        });
-      }
+      this.setState({
+        selectedMusicIds: [id],
+        currentMusic
+      });
     } else if (newSelectedMusicIds.includes(id)) { // 如果是多选状态 已选中
       const idx = newSelectedMusicIds.indexOf(id);
       newSelectedMusicIds.splice(idx, 1);
@@ -59,6 +58,30 @@ export default class TabBar extends Component {
     return null; // 如果是多选状态 未选中 装不下了
   }
 
+  handleDeleteMusic = () => {
+    const { Actions } = this.props;
+    Actions.deleteMusic(this.state.selectedMusicIds);
+    this.setState({
+      selectedMusicIds: []
+    });
+    this.handleMaskShow(null);
+  }
+
+  handleMaskShow = maskItem => {
+    this.setState({
+      isMaskActive: !this.state.isMaskActive,
+      maskItem
+    });
+  }
+
+  handleRenameMusic = newName => {
+    if (newName.length) {
+      this.props.Actions.renameMusic(this.state.selectedMusicIds[0], newName);
+      this.handleMaskShow(null);
+    } else {
+      alert('输入不能为空');
+    }
+  }
   render() {
     const { myMusic, recommendMusic } = this.props;
     return (
@@ -75,6 +98,17 @@ export default class TabBar extends Component {
           recommendMusic={recommendMusic}
           selectedMusicIds={this.state.selectedMusicIds}
           onSelectMusic={this.handleSelectMusic}
+          onDeleteMusic={this.handleDeleteMusic}
+          onMaskShow={this.handleMaskShow}
+          currentMusic={this.state.currentMusic}
+        />
+        <Mask
+          isActive={this.state.isMaskActive}
+          onMaskShow={this.handleMaskShow}
+          maskItem={this.state.maskItem}
+          onDeleteMusic={this.handleDeleteMusic}
+          onRenameMusic={this.handleRenameMusic}
+          currentMusic={this.state.currentMusic}
         />
       </div>
     );

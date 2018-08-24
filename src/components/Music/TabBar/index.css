@@ -1,6 +1,9 @@
 .myMusicBody {
   overflow: auto;
 }
+.TabBar {
+  width: 100%;
+}
 .TabBarBtn {
   display: flex;
   height: 45px;
