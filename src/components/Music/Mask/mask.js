@@ -24,6 +24,7 @@ export default class Mask extends Component {
         return (
           <Play
             onMaskShow={this.props.onMaskShow}
+            music={this.props.currentMusic}
           />
         );
       }
