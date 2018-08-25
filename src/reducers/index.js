@@ -88,6 +88,19 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
         }
       };
     }
+    case ActionTypes.CUT_MUSIC: {
+      const { id, newMusic } = action;
+      return {
+        ...state,
+        musicEntities: {
+          ...state.musicEntities,
+          [id]: {
+            ...state.musicEntities[id],
+            ...newMusic
+          }
+        }
+      };
+    }
     default:
       return state;
   }

@@ -74,6 +74,7 @@
   font-size: 12px;
 }
 .progressBarArea .back-div {
+  position: relative;
   width: 275px;
   height: 3px;
   background:#e5e5e5;
@@ -97,6 +98,17 @@
 .progressBar .back-div-red {
   height: 100%;
   background-color: #ff2064;
+}
+.cutImgInProgress {
+  position: absolute;
+  width: 6px;
+  height: 20px;
+}
+.maskHide {
+  display: none;
+}
+.maskShow {
+  display: block;
 }
 
 

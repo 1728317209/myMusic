@@ -74,3 +74,11 @@ export function renameMusic(id, newName) {
     newName
   };
 }
+
+export function cutMusic(id, newMusic) {
+  return {
+    type: ActionTypes.RENAME_MUSIC,
+    id,
+    newMusic
+  };
+}

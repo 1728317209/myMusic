@@ -37,10 +37,12 @@ export default class Mask extends Component {
         );
       }
       case 'cut': {
+        const { Actions, onMaskShow, currentMusic } = this.props;
         return (
           <Cut
-            onMaskShow={this.props.onMaskShow}
-            music={this.props.currentMusic}
+            music={currentMusic}
+            onMaskShow={onMaskShow}
+            onCutMusic={Actions.cutMusic}
           />
         );
       }

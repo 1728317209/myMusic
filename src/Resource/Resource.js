@@ -24,3 +24,5 @@ export const cut_music_finish = require('./button_cut_music_finish.png');
 export const cut_music_finish_gray = require('./button_cut_music_finish_gray.png');
 export const btn_pause = require('./btn_pause.png');
 export const btn_play = require('./btn_play.png');
+export const music_start = require('./cut_music_start.png');
+export const music_finish = require('./cut_music_finish.png');

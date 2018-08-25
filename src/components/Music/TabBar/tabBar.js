@@ -83,7 +83,7 @@ export default class TabBar extends Component {
     }
   }
   render() {
-    const { myMusic, recommendMusic } = this.props;
+    const { myMusic, recommendMusic, Actions } = this.props;
     return (
       <div className="TabBar">
         <TabBarBtn
@@ -109,6 +109,7 @@ export default class TabBar extends Component {
           onDeleteMusic={this.handleDeleteMusic}
           onRenameMusic={this.handleRenameMusic}
           currentMusic={this.state.currentMusic}
+          Actions={Actions}
         />
       </div>
     );
