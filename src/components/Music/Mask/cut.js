@@ -50,12 +50,20 @@ export default class Cut extends Component {
   }
 
   componentDidMount() {
+    const { music } = this.state;
     if (this.state.bmt !== null) {
       this.audio.currentTime = this.state.bmt;
-      // this.process.style.width = 0;
       this.process.style.marginLeft = `${this.getProcessWidth(this.state.bmt)}%`;
     }
     this.setState({
+      // bmt: music.emt === 0 ? null : music.bmt,
+      // emt: music.emt === 0 ? null : music.emt,
+      // btnStatu: {
+      //   play: 'true',
+      //   start: music.emt === 0 ? 'true' : 'false',
+      //   clear: music.emt === 0 ? 'false' : 'true',
+      //   end: music.emt === 0 ? 'true' : 'false'
+      // },
       currentTime: this.audio.currentTime,
       currentWidth: this.audio.currentTime / this.state.music.du * this.backPrecessWidth
     });
@@ -86,6 +94,7 @@ export default class Cut extends Component {
   }
 
   isShowCutMask = key => {
+    // debugger;
     if (!this.audio || this.state[key] === null) {
       return 'maskHide';
     }
@@ -94,16 +103,18 @@ export default class Cut extends Component {
 
   handleAudioChange = () => {
     const { bmt, emt } = this.state;
+    let currentWidth = 0;
     if (bmt === null) {
-      this.process.style.width = `${this.getProcessWidth(this.state.currentTime)}%`;
+      currentWidth = `${this.getProcessWidth(this.state.currentTime)}%`;
     } else {
-      this.process.style.width = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
+      currentWidth = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
     }
     if (emt !== null && this.audio.currentTime >= emt) {
       this.audio.currentTime = bmt;
     }
     this.setState({
-      currentTime: this.audio.currentTime
+      currentTime: this.audio.currentTime,
+      currentWidth
     });
   }
 
@@ -182,17 +193,18 @@ export default class Cut extends Component {
     const movingX = e.touches[0].clientX;
     const rate = (movingX - this.startX) / this.backPrecessWidth;
     let currentWidth = 0;
+    let maxWidth = this.backPrecessWidth;
     if (this.state.bmt !== null) {
       currentWidth = (this.state.currentTime - this.state.bmt) / this.state.music.du * this.backPrecessWidth;
+      if (this.state.emt !== null) {
+        maxWidth = this.getProcessWidth(this.state.emt - this.state.bmt) / 100 * this.backPrecessWidth;
+      }
     } else {
       currentWidth = this.state.currentTime / this.state.music.du * this.backPrecessWidth;
     }
     const newCurrentWidth = currentWidth + this.backPrecessWidth * rate;
-    const maxWidth = this.getProcessWidth(this.state.emt - this.state.bmt) / 100 * this.backPrecessWidth;
-    console.log('currentWidth', this.state.currentWidth);
     this.setState({
       currentWidth: this.state.bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth
-      // currentWidth: newCurrentWidth
     });
   }
 
@@ -200,12 +212,43 @@ export default class Cut extends Component {
     const endX = e.changedTouches[0].clientX;
     const rate = (endX - this.startX) / this.backPrecessWidth;
     const currentTime = this.state.currentTime + this.state.music.du * rate;
-    this.audio.currentTime = this.state.bmt !== null && currentTime > this.state.emt ? this.state.emt : currentTime;
+    this.audio.currentTime = this.state.bmt !== null && this.state.emt !== null && currentTime > this.state.emt ? this.state.emt : currentTime;
+    let currentWidth = 0;
+    let maxWidth = this.backPrecessWidth;
+    if (this.state.bmt !== null) {
+      currentWidth = (this.state.currentTime - this.state.bmt) / this.state.music.du * this.backPrecessWidth;
+      if (this.state.emt !== null) {
+        maxWidth = this.getProcessWidth(this.state.emt - this.state.bmt) / 100 * this.backPrecessWidth;
+      }
+    } else {
+      currentWidth = this.state.currentTime / this.state.music.du * this.backPrecessWidth;
+    }
+    const newCurrentWidth = currentWidth + this.backPrecessWidth * rate;
     this.setState({
       currentTime: this.state.bmt !== null && currentTime > this.state.emt ? this.state.emt : currentTime,
-      currentWidth: 0
+      currentWidth: this.state.bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth
     });
     this.audio.play();
+  }
+
+  handleCutMusic = () => {
+    const { id, emt } = this.state.music;
+    if (this.state.emt !== null && this.state.emt !== emt) {
+      this.props.onCutMusic(id, this.state.bmt, this.state.emt);
+      this.setState({
+        music: {
+          ...this.state.music,
+          bmt: this.state.bmt,
+          emt: this.state.emt
+        }
+      });
+    }
+    return null;
+  }
+
+  handleDone = () => {
+    this.props.onMaskShow(null);
+    this.handleCutMusic();
   }
 
   render() {
@@ -219,7 +262,7 @@ export default class Cut extends Component {
             <div className="opreate-item">
               <img src={this.renderImgs.start[btnStatu.start]} alt="" onClick={this.handleMarkStart} />
               <div>标记起点</div>
-              <div>{this.getTimeTransform(bmt)}</div>
+              <div>{bmt !== null ? this.getTimeTransform(bmt) : '00:00'}</div>
             </div>
             <div className="opreate-item">
               <img src={this.renderImgs.clear[btnStatu.clear]} alt="" onClick={this.handleClear} />
@@ -228,7 +271,7 @@ export default class Cut extends Component {
             <div className="opreate-item">
               <img src={this.renderImgs.end[btnStatu.end]} alt="" onClick={this.handleMarkEnd} />
               <div>标记终点</div>
-              <div>{this.audio ? this.getTimeTransform(this.state.music.du) : '00:00'}</div>
+              <div>{emt !== null ? this.getTimeTransform(emt) : this.getTimeTransform(this.state.music.du)}</div>
             </div>
           </div>
           <div className="progressBarArea">
@@ -252,7 +295,7 @@ export default class Cut extends Component {
                 />
                 <div
                   ref={process => { this.process = process; }}
-                  style={{ width: this.state.currentWidth ? this.state.currentWidth : 0 }}
+                  style={{ width: this.state.currentWidth }}
                   className="back-div-red"
                 />
                 <div
@@ -266,7 +309,7 @@ export default class Cut extends Component {
             <div>{`${this.getTimeTransform(currentTime)}/${this.getTimeTransform(music.du)}`}</div>
           </div>
         </div>
-        <div className="cut-done" onClick={() => this.props.onMaskShow(null)}>完成</div>
+        <div className="cut-done" onClick={this.handleDone}>完成</div>
         <audio
           ref={audio => { this.audio = audio; }}
           src={music.m_url}

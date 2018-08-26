@@ -89,16 +89,25 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
       };
     }
     case ActionTypes.CUT_MUSIC: {
-      const { id, newMusic } = action;
+      const { id, bmt, emt } = action;
+      console.log(id, bmt, emt);
       return {
         ...state,
         musicEntities: {
           ...state.musicEntities,
           [id]: {
             ...state.musicEntities[id],
-            ...newMusic
+            bmt,
+            emt
           }
         }
+      };
+    }
+    case ActionTypes.SET_CURRENT_MUSIC: {
+      const { id } = action;
+      return {
+        ...state,
+        currentMusicId: id
       };
     }
     default:

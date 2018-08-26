@@ -11,11 +11,18 @@ export default class TabBar extends Component {
       switchTabFlag: 'mine', // 选择的哪一个TabBar,默认选中我的音乐
       choiceFlag: true, // 单选还是多选，true：单选、flase：多选
       selectedMusicIds: [], // 选中的歌曲ids
-      currentMusic: null,
       isMaskActive: false,
       maskItem: null
     };
   }
+
+  getCurrentMusic = currentMusicId => {
+    const { myMusic, recommendMusic } = this.props;
+    if (!currentMusicId) {
+      return null;
+    }
+    return myMusic[currentMusicId] ? myMusic.myMusicList[currentMusicId] : recommendMusic[currentMusicId];
+  };
 
   handleSelectTab = key => { // 选择的哪一个TabBar
     this.setState({
@@ -29,6 +36,9 @@ export default class TabBar extends Component {
         selectedMusicIds: this.state.selectedMusicIds.length === 0 ? [] : [this.state.selectedMusicIds[0]],
         choiceFlag: key
       });
+      if (this.state.selectedMusicIds.length) {
+        this.props.Actions.setCurrentMusic(this.state.selectedMusicIds[0]);
+      }
     } else {
       this.setState({
         choiceFlag: key
@@ -36,13 +46,13 @@ export default class TabBar extends Component {
     }
   }
 
-  handleSelectMusic = (id, currentMusic) => {
+  handleSelectMusic = id => {
     const newSelectedMusicIds = [...this.state.selectedMusicIds];
     if (this.state.choiceFlag) { // 如果是单选状态
       this.setState({
-        selectedMusicIds: [id],
-        currentMusic
+        selectedMusicIds: [id]
       });
+      this.props.Actions.setCurrentMusic(id);
     } else if (newSelectedMusicIds.includes(id)) { // 如果是多选状态 已选中
       const idx = newSelectedMusicIds.indexOf(id);
       newSelectedMusicIds.splice(idx, 1);
@@ -82,8 +92,14 @@ export default class TabBar extends Component {
       alert('输入不能为空');
     }
   }
+
   render() {
-    const { myMusic, recommendMusic, Actions } = this.props;
+    const {
+      myMusic,
+      recommendMusic,
+      currentMusic,
+      Actions
+    } = this.props;
     return (
       <div className="TabBar">
         <TabBarBtn
@@ -108,7 +124,7 @@ export default class TabBar extends Component {
           maskItem={this.state.maskItem}
           onDeleteMusic={this.handleDeleteMusic}
           onRenameMusic={this.handleRenameMusic}
-          currentMusic={this.state.currentMusic}
+          currentMusic={currentMusic}
           Actions={Actions}
         />
       </div>

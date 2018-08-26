@@ -12,6 +12,7 @@ export default class Music extends Component {
       user,
       myMusic,
       recommendMusic,
+      currentMusic,
       Actions
     } = this.props;
     return (
@@ -22,6 +23,7 @@ export default class Music extends Component {
         <TabBar
           myMusic={myMusic}
           recommendMusic={recommendMusic}
+          currentMusic={currentMusic}
           Actions={Actions}
         />
       </div>

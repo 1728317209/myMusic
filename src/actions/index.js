@@ -75,10 +75,18 @@ export function renameMusic(id, newName) {
   };
 }
 
-export function cutMusic(id, newMusic) {
+export function cutMusic(id, bmt, emt) {
   return {
-    type: ActionTypes.RENAME_MUSIC,
+    type: ActionTypes.CUT_MUSIC,
     id,
-    newMusic
+    bmt,
+    emt
+  };
+}
+
+export function setCurrentMusic(id) {
+  return {
+    type: ActionTypes.SET_CURRENT_MUSIC,
+    id
   };
 }
