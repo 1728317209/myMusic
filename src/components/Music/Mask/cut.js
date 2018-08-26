@@ -50,25 +50,15 @@ export default class Cut extends Component {
   }
 
   componentDidMount() {
-    const { music } = this.state;
     if (this.state.bmt !== null) {
       this.audio.currentTime = this.state.bmt;
       this.process.style.marginLeft = `${this.getProcessWidth(this.state.bmt)}%`;
     }
     this.setState({
-      // bmt: music.emt === 0 ? null : music.bmt,
-      // emt: music.emt === 0 ? null : music.emt,
-      // btnStatu: {
-      //   play: 'true',
-      //   start: music.emt === 0 ? 'true' : 'false',
-      //   clear: music.emt === 0 ? 'false' : 'true',
-      //   end: music.emt === 0 ? 'true' : 'false'
-      // },
-      currentTime: this.audio.currentTime,
-      currentWidth: this.audio.currentTime / this.state.music.du * this.backPrecessWidth
+      currentTime: this.state.bmt,
+      currentWidth: 0
     });
   }
-
 
   getCutMaskPosition = key => `${this.getProcessWidth(this.state[key])}%`;
 
@@ -108,8 +98,14 @@ export default class Cut extends Component {
       currentWidth = `${this.getProcessWidth(this.state.currentTime)}%`;
     } else {
       currentWidth = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
+      if (emt !== null) {
+        currentWidth = this.state.currentTime > this.state.emt ? `${this.getProcessWidth(emt - bmt)}%` : currentWidth;
+      }
     }
     if (emt !== null && this.audio.currentTime >= emt) {
+      this.audio.currentTime = bmt;
+    }
+    if (bmt !== null && this.audio.currentTime <= bmt) {
       this.audio.currentTime = bmt;
     }
     this.setState({
@@ -154,7 +150,7 @@ export default class Cut extends Component {
   }
 
   handleMarkEnd = () => {
-    if (this.state.btm !== null) {
+    if (this.state.bmt !== null) {
       this.setState({
         currentTime: this.audio.currentTime,
         emt: this.audio.currentTime,
@@ -189,9 +185,7 @@ export default class Cut extends Component {
     this.audio.pause();
   }
 
-  handleTouchMove = e => {
-    const movingX = e.touches[0].clientX;
-    const rate = (movingX - this.startX) / this.backPrecessWidth;
+  handleMovingProgressWidth = rate => {
     let currentWidth = 0;
     let maxWidth = this.backPrecessWidth;
     if (this.state.bmt !== null) {
@@ -203,8 +197,14 @@ export default class Cut extends Component {
       currentWidth = this.state.currentTime / this.state.music.du * this.backPrecessWidth;
     }
     const newCurrentWidth = currentWidth + this.backPrecessWidth * rate;
+    return this.state.bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth;
+  }
+
+  handleTouchMove = e => {
+    const movingX = e.touches[0].clientX;
+    const rate = (movingX - this.startX) / this.backPrecessWidth;
     this.setState({
-      currentWidth: this.state.bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth
+      currentWidth: this.handleMovingProgressWidth(rate)
     });
   }
 
@@ -212,21 +212,10 @@ export default class Cut extends Component {
     const endX = e.changedTouches[0].clientX;
     const rate = (endX - this.startX) / this.backPrecessWidth;
     const currentTime = this.state.currentTime + this.state.music.du * rate;
-    this.audio.currentTime = this.state.bmt !== null && this.state.emt !== null && currentTime > this.state.emt ? this.state.emt : currentTime;
-    let currentWidth = 0;
-    let maxWidth = this.backPrecessWidth;
-    if (this.state.bmt !== null) {
-      currentWidth = (this.state.currentTime - this.state.bmt) / this.state.music.du * this.backPrecessWidth;
-      if (this.state.emt !== null) {
-        maxWidth = this.getProcessWidth(this.state.emt - this.state.bmt) / 100 * this.backPrecessWidth;
-      }
-    } else {
-      currentWidth = this.state.currentTime / this.state.music.du * this.backPrecessWidth;
-    }
-    const newCurrentWidth = currentWidth + this.backPrecessWidth * rate;
+    this.audio.currentTime = currentTime;
     this.setState({
       currentTime: this.state.bmt !== null && currentTime > this.state.emt ? this.state.emt : currentTime,
-      currentWidth: this.state.bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth
+      currentWidth: this.handleMovingProgressWidth(rate)
     });
     this.audio.play();
   }
@@ -249,6 +238,16 @@ export default class Cut extends Component {
   handleDone = () => {
     this.props.onMaskShow(null);
     this.handleCutMusic();
+  }
+
+  handleProgressClick = e => {
+    const currentWidth = e.clientX - this.backOffsetLeft;
+    const rate = currentWidth / this.backPrecessWidth;
+    const currentTime = rate * this.state.music.du;
+    this.audio.currentTime = currentTime;
+    this.setState({
+      currentTime
+    });
   }
 
   render() {
@@ -279,7 +278,11 @@ export default class Cut extends Component {
               <img src={this.renderImgs.play[btnStatu.play]} className="pause-or-play" alt="" onClick={this.handlePlay} />
               <div
                 className="back-div"
-                ref={backPrecess => { this.backPrecessWidth = backPrecess ? backPrecess.offsetWidth : null; }}
+                ref={backPrecess => {
+                  this.backPrecessWidth = backPrecess ? backPrecess.offsetWidth : null;
+                  this.backOffsetLeft = backPrecess ? backPrecess.offsetLeft : null;
+                }}
+                onClick={this.handleProgressClick}
               >
                 <img
                   src={imgs.music_start}
