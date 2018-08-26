@@ -12,23 +12,6 @@ export default class Foot extends Component {
     };
   }
 
-  // componentWillMount() {
-  //   this.itemClickFuc = {
-  //     active: this.props.onMaskShow,
-  //     notActive: {
-  //       true: { // 单选状态
-  //         rename: this.showMessage.bind(this, '漂流瓶中的音乐不能重命名哦！')
-  //       },
-  //       false: { // 多选状态
-  //         play: this.showMessage.bind(this, '多选状态下不能播放哦！'),
-  //         rename: this.showMessage.bind(this, '多选状态下不能重命名哦！'),
-  //         cut: this.showMessage.bind(this, '多选状态下不能截取哦！'),
-  //         share: this.showMessage.bind(this, '多选状态下不能分享哦！')
-  //       }
-  //     }
-  //   };
-  // }
-
   getItemStatus = () => {
     const { selectedMusicIds, choiceFlag, currentMusic } = this.props;
     if (choiceFlag) { // 单选
@@ -63,13 +46,17 @@ export default class Foot extends Component {
       share: 'notActive',
       delete: 'active'
     };
+    if (selectedMusicIds.length === 0) {
+      itemStatus.delete = 'notActive';
+    }
     return itemStatus;
   }
 
   getOnClickFuc = (status, item) => {
-    console.log(this.props.choiceFlag);
     if (status === 'active') {
       return this.props.onMaskShow(item);
+    } else if (this.props.selectedMusicIds.length === 0) {
+      return this.showMessage('您还没有选中音乐哦！');
     } else if (!this.props.choiceFlag) {
       switch (item) {
         case 'play': {
@@ -100,10 +87,9 @@ export default class Foot extends Component {
     });
   }
 
-  renderFoot = (itemStatus, itemClickFuc) => this.state.list.map((item, idx) => {
+  renderFoot = itemStatus => this.state.list.map((item, idx) => {
     const { entities } = this.state;
     const status = itemStatus[item];
-    // console.log('itemClickFuc[status]', itemClickFuc[status]);
     return (
       <div className="Foot-item" key={idx} onClick={() => this.getOnClickFuc(status, item)}>
         <img src={entities[item].img[status]} alt="" />
