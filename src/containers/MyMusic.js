@@ -12,8 +12,8 @@ class MyMusic extends React.Component {
   componentDidMount() {
     const { Actions } = this.props;
     Actions.fetchLoginInfo(101);
-    Actions.fetchMyMusicInfo('test80031');
-    Actions.fetchRecommendInfo('test80031');
+    Actions.fetchMyMusicInfo();
+    Actions.fetchRecommendInfo();
   }
   render() {
     const {

@@ -13,6 +13,9 @@ const callServerApi = (endpoint, params, normalizeFuc) => new Promise((resolve, 
   }).then(res => {
     if (res.data.ret === 1) {
       console.log('cccccccccccccccccccc', res.data.data);
+      if (params.getToken) {
+        params.getToken(res.data.data);
+      }
       return resolve(normalizeFuc ? normalizeFuc(res.data.data) : res.data.data);
     }
     return reject(new Error(res.data.errMsg));
@@ -30,6 +33,7 @@ export default store => next => action => {
     params,
     normalizeFuc
   } = action.SERVER_API;
+  console.log('pppppppppppppppppppppppppp', action);
 
   if (typeof type !== 'string') {
     throw new Error('type shoudle be a string');
@@ -54,7 +58,7 @@ export default store => next => action => {
     }).catch(err => {
       next({
         type: `${type}_FAI`,
-        errMsg: err.errMsg
+        errMsg: err.message
       });
     });
 };
