@@ -53,38 +53,32 @@ export default class Foot extends Component {
   }
 
   getOnClickFuc = (status, item) => {
+    const { onMessageShow } = this.props;
     if (status === 'active') {
       return this.props.onMaskShow(item);
     } else if (this.props.selectedMusicIds.length === 0) {
-      return this.showMessage('您还没有选中音乐哦！');
+      return onMessageShow('您还没有选中音乐哦！');
     } else if (!this.props.choiceFlag) {
       switch (item) {
         case 'play': {
-          return this.showMessage('多选状态下不能播放哦！');
+          return onMessageShow('多选状态下不能播放哦！');
         }
         case 'rename': {
-          return this.showMessage('多选状态下不能重命名哦！');
+          return onMessageShow('多选状态下不能重命名哦！');
         }
         case 'cut': {
-          return this.showMessage('多选状态下不能截取哦！');
+          return onMessageShow('多选状态下不能截取哦！');
         }
         case 'share': {
-          return this.showMessage('多选状态下不能分享哦！');
+          return onMessageShow('多选状态下不能分享哦！');
         }
         default:
           break;
       }
     } else if (item === 'rename') {
-      return this.showMessage('漂流瓶中的音乐不能重命名哦！');
+      return onMessageShow('漂流瓶中的音乐不能重命名哦！');
     }
     return null;
-  }
-
-  showMessage = message => {
-    console.log('lllllllllllllllllllll');
-    this.setState({
-      message
-    });
   }
 
   renderFoot = itemStatus => this.state.list.map((item, idx) => {
@@ -105,9 +99,6 @@ export default class Foot extends Component {
         {
           this.renderFoot(itemStatus, this.itemClickFuc)
         }
-        <Message
-          message={this.state.message}
-        />
       </div>
     );
   }

@@ -24,13 +24,14 @@ export default class TabBarBtn extends Component {
         <div className={item} onClick={() => onSelectTab(item)} key={idx}>
           <div className="item">
             <img src={entities[item].img[status]} alt="" />
-            <span className={classInfo[status].spanClass}>我的音乐</span>
+            <span className={classInfo[status].spanClass}>{entities[item].title}</span>
           </div>
           <div className={`bottom ${classInfo[status].bottomClass}`} />
         </div>
       );
     });
   }
+
   render() {
     const renderInfo = this.getRenderInfo();
     return (

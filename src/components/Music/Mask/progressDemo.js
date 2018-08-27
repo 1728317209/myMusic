@@ -173,6 +173,8 @@ export default class Play extends Component {
   render() {
     const { music } = this.props;
     const { currentTime, btnStatu } = this.state;
+    console.log('VVVVVVVVVVVVVVVVVVVVVVVVV', this.props.audio);
+    console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', this.props.audio ? this.props.audio.currentTime : null);
     return (
       <div className="Play">
         <div className="play-close" onClick={() => this.props.onMaskShow(null)}>关闭</div>

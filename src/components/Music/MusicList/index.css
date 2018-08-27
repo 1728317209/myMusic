@@ -22,7 +22,20 @@
   height: 50px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
+}
+.divider {
+  position: relative;
+}
+.divider:after {
+  position: absolute;
+  content: '';
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #e5e5e5;
+  transform: scaleY(0.5)
 }
 .single-select-icon {
   width: 16px;

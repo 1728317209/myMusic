@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as imgs from '../../../Resource/Resource';
+import Progress from './progressDemo';
 import './mask.css';
 
 export default class Cut extends Component {
@@ -254,8 +255,11 @@ export default class Cut extends Component {
     const {
       music, currentTime, btnStatu, bmt, emt
     } = this.state;
+    console.log('MMMMMMMMMMMMMMMMMMMM', this.audio);
+    console.log('MMMMMMMMMMMMMMMMMMMM', this.audio ? this.audio.currentTime : null);
     return (
       <div className="Cut">
+        <Progress audio={this.audio} />
         <div className="other">
           <div className="opreate">
             <div className="opreate-item">

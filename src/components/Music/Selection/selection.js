@@ -10,15 +10,15 @@ export default class Selection extends Component {
     const { choiceFlag, onChoice } = this.props;
     return (
       <div className="Selection">
-        <div className="select-div">
-          <div className="big-select-btn">
-            <div className={`small-select-btn single-${choiceFlag}`} onClick={() => onChoice(true)} />
+        <div className="select-div" onClick={() => onChoice(true)}>
+          <div className="big-select-btn" >
+            <div className={`small-select-btn single-${choiceFlag}`} />
           </div>
           <span>单选</span>
         </div>
-        <div className="select-div">
+        <div className="select-div" onClick={() => onChoice(false)}>
           <div className="big-select-btn">
-            <div className={`small-select-btn multiple-${choiceFlag}`} onClick={() => onChoice(false)} />
+            <div className={`small-select-btn multiple-${choiceFlag}`} />
           </div>
           <span>多选</span>
         </div>

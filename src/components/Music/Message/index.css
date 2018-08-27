@@ -1,66 +1,85 @@
 .Message-true {
   position: fixed;
   display: flex;
-  width: 120px;
   height: 50px;
+  width: 100%;
   z-index: 500;
-  left: 50%;
-  margin-left: -60px;
-  text-align: center;
-  background: rgba(255, 255, 255, .4);
   justify-content: space-around;
-  animation:addScore-true 1500ms;
+  align-items: center;
+  background: rgba(255, 255, 255, .0);
+  animation:addScore-true 3s;
   animation-fill-mode: forwards;
-  -webkit-animation:addScore-true 1500ms ease-in-out; /* Safari and Chrome */
+  -webkit-animation:addScore-true 3s ease-in-out; /* Safari and Chrome */
   -webkit-animation-fill-mode: forwards;
 }
 .Message-false {
   position: fixed;
   display: flex;
-  width: 120px;
   height: 50px;
+  width: 100%;
   z-index: 500;
-  left: 50%;
-  margin-left: -60px;
-  text-align: center;
-  background: rgba(255, 255, 255, .4);
   justify-content: space-around;
-  animation:addScore-false 1500ms;
+  align-items: center;
+  background: rgba(255, 255, 255, .0);
+  animation:addScore-false 3s;
   animation-fill-mode: forwards;
-  -webkit-animation:addScore-false 1500ms ease-in-out; /* Safari and Chrome */
+  -webkit-animation:addScore-false 3s ease-in-out; /* Safari and Chrome */
   -webkit-animation-fill-mode: forwards;
 }
 @keyframes addScore-true {
   0% {
     opacity: 0;
-    top: 0px;
-}
+    bottom: -50px;
+  }
+  5% {
+    opacity: 0;
+    bottom: 100px;
+  }
+  10% {
+    opacity: 1;
+    bottom: 100px;
+  }
   90% {
     opacity: 1;
-    top: 25%;
+    bottom: 100px;
+  }
+  95% {
+    opacity: 0;
+    bottom: 100px;
   }
   100% {
     opacity: 0;
-    top: 0;
+    bottom: -50px;
   }
 }
 @keyframes addScore-false {
   0% {
     opacity: 0;
-    top: 0px;
-}
+    bottom: -50px;
+  }
+  5% {
+    opacity: 0;
+    bottom: 100px;
+  }
+  10% {
+    opacity: 1;
+    bottom: 100px;
+  }
   90% {
     opacity: 1;
-    top: 25%;
+    bottom: 100px;
+  }
+  95% {
+    opacity: 0;
+    bottom: 100px;
   }
   100% {
     opacity: 0;
-    top: 0;
+    bottom: -50px;
   }
 }
 .result {
-  align-self: center;
   font-size: 17px;
   font-weight: bold;
-  color: red;
+  color: #ff2064;
 }

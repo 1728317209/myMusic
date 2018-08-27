@@ -16,7 +16,8 @@ export default class TabBarBody extends Component {
       onSelectMusic,
       onDeleteMusic,
       onMaskShow,
-      currentMusic
+      currentMusic,
+      onMessageShow
     } = this.props;
 
     if (switchTabFlag === 'mine') {
@@ -39,6 +40,7 @@ export default class TabBarBody extends Component {
             choiceFlag={choiceFlag}
             selectedMusicIds={selectedMusicIds}
             currentMusic={currentMusic}
+            onMessageShow={onMessageShow}
           />
         </div>
       );

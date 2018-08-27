@@ -7,9 +7,10 @@ export default class Share extends Component {
   };
 
   render() {
+    const { currentMusic } = this.props;
     return (
-      <div className="">
-        Share
+      <div className="Share" >
+        <div className="share-textArea">送出 {currentMusic.name} ^v^</div>
       </div>
     );
   }

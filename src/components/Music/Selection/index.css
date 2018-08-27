@@ -6,12 +6,15 @@
   margin: 0 15px;
 }
 .Selection .select-div {
-  width: 20%;
+  align-items: center;
   height: 16px;
   display: flex;
   justify-content: flex-start;
+  font-size: 12px;
+  margin-right: 30px;
 }
 .Selection .select-div span {
+  line-height: 50px;
   font-size: 12px;
 }
 .Selection .select-div .big-select-btn {

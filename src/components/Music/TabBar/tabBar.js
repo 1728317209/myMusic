@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TabBarBtn from './tabBarBtn';
 import TabBarBody from './tabBarBody';
 import Mask from '../Mask/mask';
+import Message from '../Message/Message';
 import './index.css';
 
 export default class TabBar extends Component {
@@ -12,7 +13,8 @@ export default class TabBar extends Component {
       choiceFlag: true, // 单选还是多选，true：单选、flase：多选
       selectedMusicIds: [], // 选中的歌曲ids
       isMaskActive: false,
-      maskItem: null
+      maskItem: null,
+      message: null
     };
   }
 
@@ -26,6 +28,7 @@ export default class TabBar extends Component {
 
   handleSelectTab = key => { // 选择的哪一个TabBar
     this.setState({
+      message: null,
       switchTabFlag: key
     });
   }
@@ -33,6 +36,7 @@ export default class TabBar extends Component {
   handleChoice = key => { // 单选还是多选
     if (key && !this.state.choiceFlag) { // 多选转单选
       this.setState({
+        message: null,
         selectedMusicIds: this.state.selectedMusicIds.length === 0 ? [] : [this.state.selectedMusicIds[0]],
         choiceFlag: key
       });
@@ -41,15 +45,18 @@ export default class TabBar extends Component {
       }
     } else {
       this.setState({
+        message: null,
         choiceFlag: key
       });
     }
   }
 
   handleSelectMusic = id => {
+    console.log(this.state.choiceFlag, this.state.selectedMusicIds);
     const newSelectedMusicIds = [...this.state.selectedMusicIds];
     if (this.state.choiceFlag) { // 如果是单选状态
       this.setState({
+        message: null,
         selectedMusicIds: [id]
       });
       this.props.Actions.setCurrentMusic(id);
@@ -57,13 +64,18 @@ export default class TabBar extends Component {
       const idx = newSelectedMusicIds.indexOf(id);
       newSelectedMusicIds.splice(idx, 1);
       this.setState({
+        message: null,
         selectedMusicIds: newSelectedMusicIds
       });
     } else if (newSelectedMusicIds.length < 5) { // 如果是多选状态 未选中 还装得下
+      // debugger
       newSelectedMusicIds.push(id);
       this.setState({
+        message: null,
         selectedMusicIds: newSelectedMusicIds
       });
+    } else {
+      this.showMessage('最多选五首哦');
     }
     return null; // 如果是多选状态 未选中 装不下了
   }
@@ -72,6 +84,7 @@ export default class TabBar extends Component {
     const { Actions } = this.props;
     Actions.deleteMusic(this.state.selectedMusicIds);
     this.setState({
+      message: null,
       selectedMusicIds: []
     });
     this.handleMaskShow(null);
@@ -79,6 +92,7 @@ export default class TabBar extends Component {
 
   handleMaskShow = maskItem => {
     this.setState({
+      message: null,
       isMaskActive: !this.state.isMaskActive,
       maskItem
     });
@@ -91,6 +105,12 @@ export default class TabBar extends Component {
     } else {
       alert('输入不能为空');
     }
+  }
+
+  showMessage = message => {
+    this.setState({
+      message
+    });
   }
 
   render() {
@@ -116,16 +136,23 @@ export default class TabBar extends Component {
           onSelectMusic={this.handleSelectMusic}
           onDeleteMusic={this.handleDeleteMusic}
           onMaskShow={this.handleMaskShow}
-          currentMusic={this.state.currentMusic}
+          currentMusic={currentMusic}
+          onMessageShow={this.showMessage}
         />
         <Mask
           isActive={this.state.isMaskActive}
           onMaskShow={this.handleMaskShow}
           maskItem={this.state.maskItem}
+          selectedMusicIds={this.state.selectedMusicIds}
           onDeleteMusic={this.handleDeleteMusic}
           onRenameMusic={this.handleRenameMusic}
           currentMusic={currentMusic}
           Actions={Actions}
+          choiceFlag={this.state.choiceFlag}
+        />
+        <Message
+          message={this.state.message}
+          // maskItem={this.state.maskItem}
         />
       </div>
     );

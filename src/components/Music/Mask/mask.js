@@ -48,7 +48,9 @@ export default class Mask extends Component {
       }
       case 'share': {
         return (
-          <Share />
+          <Share
+            currentMusic={this.props.currentMusic}
+          />
         );
       }
       case 'delete': {
@@ -56,6 +58,9 @@ export default class Mask extends Component {
           <Delete
             onMaskShow={this.props.onMaskShow}
             onDeleteMusic={this.props.onDeleteMusic}
+            selectedMusicIds={this.props.selectedMusicIds}
+            currentMusic={this.props.currentMusic}
+            choiceFlag={this.props.choiceFlag}
           />
         );
       }
