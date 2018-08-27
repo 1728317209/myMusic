@@ -13,12 +13,14 @@ export default class Music extends Component {
       myMusic,
       recommendMusic,
       currentMusic,
+      selectedMusicIds,
       Actions
     } = this.props;
     return (
       <div className="Music">
         <Head
           user={user}
+          selectedMusicIds={selectedMusicIds}
         />
         <TabBar
           myMusic={myMusic}

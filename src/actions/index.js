@@ -84,9 +84,9 @@ export function cutMusic(id, bmt, emt) {
   };
 }
 
-export function setCurrentMusic(id) {
+export function storeSelectedMusic(ids) {
   return {
-    type: ActionTypes.SET_CURRENT_MUSIC,
-    id
+    type: ActionTypes.STORE_SELECTED_MUSIC,
+    ids
   };
 }

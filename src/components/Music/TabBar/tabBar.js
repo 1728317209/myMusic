@@ -42,7 +42,7 @@ export default class TabBar extends Component {
         choiceFlag: key
       });
       if (this.state.selectedMusicIds.length) {
-        this.props.Actions.setCurrentMusic(this.state.selectedMusicIds[0]);
+        this.props.Actions.storeSelectedMusic(this.state.selectedMusicIds[0]);
       }
     } else {
       this.setState({
@@ -62,7 +62,7 @@ export default class TabBar extends Component {
         selectedMusicIds: [id],
         selectedMusicTypes: [type]
       });
-      this.props.Actions.setCurrentMusic(id);
+      this.props.Actions.storeSelectedMusic([id]);
     } else if (newSelectedMusicIds.includes(id)) { // 如果是多选状态 已选中
       const idx = newSelectedMusicIds.indexOf(id);
       newSelectedMusicIds.splice(idx, 1);
@@ -72,6 +72,7 @@ export default class TabBar extends Component {
         selectedMusicIds: newSelectedMusicIds,
         selectedMusicTypes: newSelectedMusicTypes
       });
+      this.props.Actions.storeSelectedMusic(newSelectedMusicIds);
     } else if (newSelectedMusicIds.length < 5) { // 如果是多选状态 未选中 还装得下
       newSelectedMusicIds.push(id);
       newSelectedMusicTypes.push(type);
@@ -80,6 +81,7 @@ export default class TabBar extends Component {
         selectedMusicIds: newSelectedMusicIds,
         selectedMusicTypes: newSelectedMusicTypes
       });
+      this.props.Actions.storeSelectedMusic(newSelectedMusicIds);
     } else {
       this.showMessage('最多选五首哦');
     }

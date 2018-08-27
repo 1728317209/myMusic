@@ -9,9 +9,14 @@ export default class Head extends Component {
   handleReturn = () => {
     window.alert('Go Back');
   }
+
+  handleDone = () => {
+    window.alert(`当前选中了${this.props.selectedMusicIds}`)
+  }
+
   render() {
     const { user } = this.props;
-    const nick = !user ? null : user[0].nick; //  || user.length === 0
+    const nick = !user ? null : user[0].nick;
     return (
       <div className="Head">
         <div>
@@ -24,7 +29,7 @@ export default class Head extends Component {
           <span>{nick}</span>
         </div>
         <div className="done">
-          <span>完成</span>
+          <span onClick={this.handleDone}>完成</span>
         </div>
       </div>
     );

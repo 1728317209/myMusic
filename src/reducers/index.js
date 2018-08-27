@@ -72,7 +72,7 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
           ...state.myMusic,
           myMusicList: getNewMusicIds(musicIds, state.myMusic.myMusicList)
         },
-        recommendMusicList: getNewMusicIds(musicIds, state.recommendMusicList)
+        selectedMusicIds: []
       };
     }
     case ActionTypes.RENAME_MUSIC: {
@@ -90,7 +90,6 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
     }
     case ActionTypes.CUT_MUSIC: {
       const { id, bmt, emt } = action;
-      console.log(id, bmt, emt);
       return {
         ...state,
         musicEntities: {
@@ -103,11 +102,11 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
         }
       };
     }
-    case ActionTypes.SET_CURRENT_MUSIC: {
-      const { id } = action;
+    case ActionTypes.STORE_SELECTED_MUSIC: {
+      const { ids } = action;
       return {
         ...state,
-        currentMusicId: id
+        selectedMusicIds: ids
       };
     }
     default:

@@ -3,6 +3,7 @@ export const others = {
 };
 
 export const MusicInfo = {
+  selectedMusicIds: [],
   userMids: [],
   myMusic: {
     e: null,

@@ -21,9 +21,9 @@ class MyMusic extends React.Component {
       myMusic,
       recommendMusic,
       Actions,
-      currentMusic
+      currentMusic,
+      selectedMusicIds
     } = this.props;
-    console.log('VVVVVVVVVVVVVVVVVVVVVV', myMusic, recommendMusic);
     return (
       <div>
         <Music
@@ -31,6 +31,7 @@ class MyMusic extends React.Component {
           myMusic={myMusic}
           recommendMusic={recommendMusic}
           currentMusic={currentMusic}
+          selectedMusicIds={selectedMusicIds}
           Actions={Actions}
         />
       </div>
@@ -52,7 +53,7 @@ function mapStateToProps(state) {
     myMusic,
     recommendMusicList,
     musicEntities,
-    currentMusicId
+    selectedMusicIds
   } = state;
 
   const myMusicList = myMusic ? myMusic.myMusicList : null;
@@ -63,7 +64,8 @@ function mapStateToProps(state) {
       myMusicList: mergeEntities(myMusicList, musicEntities)
     },
     recommendMusic: mergeEntities(recommendMusicList, musicEntities),
-    currentMusic: musicEntities[currentMusicId]
+    currentMusic: musicEntities[selectedMusicIds[0]],
+    selectedMusicIds
   };
 }
 function mapDispatchToProps(dispatch) {
