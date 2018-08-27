@@ -140,7 +140,7 @@ export default class Cut extends Component {
   }
 
   renderCutMark = () => {
-    const { btnStatu, bmt } = this.state;
+    const { btnStatu, bmt, emt } = this.state;
     return (
       <div className="opreate">
         <div className="opreate-item">
@@ -155,6 +155,7 @@ export default class Cut extends Component {
         <div className="opreate-item">
           <img src={this.renderImgs.end[btnStatu.end]} alt="" onClick={this.handleMarkEnd} />
           <div>标记终点</div>
+          <div>{emt !== null ? this.getTimeTransform(emt) : this.getTimeTransform(this.state.music.du)}</div>
         </div>
       </div>
     );

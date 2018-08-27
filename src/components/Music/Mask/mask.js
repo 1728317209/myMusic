@@ -33,6 +33,7 @@ export default class Mask extends Component {
           <Rename
             onMaskShow={this.props.onMaskShow}
             onRenameMusic={this.props.onRenameMusic}
+            currentMusic={this.props.currentMusic}
           />
         );
       }

@@ -5,16 +5,13 @@ import * as HandleActions from '../actions/index';
 import Music from '../components/Music/Music';
 
 class MyMusic extends React.Component {
-  state = {
-
-  };
-
   componentDidMount() {
     const { Actions } = this.props;
     Actions.fetchLoginInfo(101);
     Actions.fetchMyMusicInfo();
     Actions.fetchRecommendInfo();
   }
+
   render() {
     const {
       user,

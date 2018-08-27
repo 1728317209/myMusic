@@ -95,8 +95,8 @@ export default class Play extends Component {
     }
     this.setState({
       currentTime: this.audio.currentTime,
-      currentWidth,
-      marginLeft
+      marginLeft,
+      currentWidth
     });
   }
 
@@ -212,7 +212,7 @@ export default class Play extends Component {
               className={`cutImgInProgress ${this.isShowCutMask('emt')}`}
             />
             <div
-              style={{ width: this.state.currentWidth, marginLeft: this.state.marginLeft }}
+              style={{ marginLeft: this.state.marginLeft, width: this.state.currentWidth }}
               className="back-div-red"
             />
             <div

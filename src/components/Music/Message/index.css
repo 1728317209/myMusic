@@ -6,7 +6,6 @@
   z-index: 500;
   justify-content: space-around;
   align-items: center;
-  background: rgba(255, 255, 255, .0);
   animation:addScore-true 3s;
   animation-fill-mode: forwards;
   -webkit-animation:addScore-true 3s ease-in-out; /* Safari and Chrome */
@@ -20,7 +19,6 @@
   z-index: 500;
   justify-content: space-around;
   align-items: center;
-  background: rgba(255, 255, 255, .0);
   animation:addScore-false 3s;
   animation-fill-mode: forwards;
   -webkit-animation:addScore-false 3s ease-in-out; /* Safari and Chrome */

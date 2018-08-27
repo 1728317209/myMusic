@@ -10,7 +10,6 @@ export const footState = {
   entities: {
     play: {
       title: '播放',
-      status: 'active',
       img: {
         active: imgs.button_new_play,
         notActive: imgs.button_new_play_gray
@@ -18,7 +17,6 @@ export const footState = {
     },
     rename: {
       title: '重命名',
-      status: 'active',
       img: {
         active: imgs.button_rename_red,
         notActive: imgs.button_rename_gray
@@ -26,7 +24,6 @@ export const footState = {
     },
     cut: {
       title: '选取片段',
-      status: 'active',
       img: {
         active: imgs.button_cut,
         notActive: imgs.button_cut_gray
@@ -34,7 +31,6 @@ export const footState = {
     },
     share: {
       title: '送给朋友',
-      status: 'active',
       img: {
         active: imgs.button_share,
         notActive: imgs.button_share_gray
@@ -42,7 +38,6 @@ export const footState = {
     },
     delete: {
       title: '删除',
-      status: 'active',
       img: {
         active: imgs.button_delete,
         notActive: imgs.button_delete_gray

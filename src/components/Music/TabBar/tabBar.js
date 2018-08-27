@@ -39,11 +39,10 @@ export default class TabBar extends Component {
       this.setState({
         message: null,
         selectedMusicIds: this.state.selectedMusicIds.length === 0 ? [] : [this.state.selectedMusicIds[0]],
+        selectedMusicTypes: this.state.selectedMusicTypes.length === 0 ? [] : [this.state.selectedMusicTypes[0]],
         choiceFlag: key
       });
-      if (this.state.selectedMusicIds.length) {
-        this.props.Actions.storeSelectedMusic(this.state.selectedMusicIds[0]);
-      }
+      this.props.Actions.storeSelectedMusic(this.state.selectedMusicIds[0]);
     } else {
       this.setState({
         message: null,
@@ -93,7 +92,8 @@ export default class TabBar extends Component {
     Actions.deleteMusic(this.state.selectedMusicIds);
     this.setState({
       message: null,
-      selectedMusicIds: []
+      selectedMusicIds: [],
+      selectedMusicTypes: []
     });
     this.handleMaskShow(null);
   }
@@ -107,12 +107,8 @@ export default class TabBar extends Component {
   }
 
   handleRenameMusic = newName => {
-    if (newName.length) {
-      this.props.Actions.renameMusic(this.state.selectedMusicIds[0], newName);
-      this.handleMaskShow(null);
-    } else {
-      alert('输入不能为空');
-    }
+    this.props.Actions.renameMusic(this.state.selectedMusicIds[0], newName);
+    this.handleMaskShow(null);
   }
 
   showMessage = message => {
