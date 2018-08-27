@@ -12,6 +12,7 @@ export default class TabBar extends Component {
       switchTabFlag: 'mine', // 选择的哪一个TabBar,默认选中我的音乐
       choiceFlag: true, // 单选还是多选，true：单选、flase：多选
       selectedMusicIds: [], // 选中的歌曲ids
+      selectedMusicTypes: [], // 选中歌曲的类型，我的音乐 or 推荐音乐
       isMaskActive: false,
       maskItem: null,
       message: null
@@ -51,28 +52,33 @@ export default class TabBar extends Component {
     }
   }
 
-  handleSelectMusic = id => {
+  handleSelectMusic = (id, type) => {
     console.log(this.state.choiceFlag, this.state.selectedMusicIds);
     const newSelectedMusicIds = [...this.state.selectedMusicIds];
+    const newSelectedMusicTypes = [...this.state.selectedMusicTypes];
     if (this.state.choiceFlag) { // 如果是单选状态
       this.setState({
         message: null,
-        selectedMusicIds: [id]
+        selectedMusicIds: [id],
+        selectedMusicTypes: [type]
       });
       this.props.Actions.setCurrentMusic(id);
     } else if (newSelectedMusicIds.includes(id)) { // 如果是多选状态 已选中
       const idx = newSelectedMusicIds.indexOf(id);
       newSelectedMusicIds.splice(idx, 1);
+      newSelectedMusicTypes.splice(idx, 1);
       this.setState({
         message: null,
-        selectedMusicIds: newSelectedMusicIds
+        selectedMusicIds: newSelectedMusicIds,
+        selectedMusicTypes: newSelectedMusicTypes
       });
     } else if (newSelectedMusicIds.length < 5) { // 如果是多选状态 未选中 还装得下
-      // debugger
       newSelectedMusicIds.push(id);
+      newSelectedMusicTypes.push(type);
       this.setState({
         message: null,
-        selectedMusicIds: newSelectedMusicIds
+        selectedMusicIds: newSelectedMusicIds,
+        selectedMusicTypes: newSelectedMusicTypes
       });
     } else {
       this.showMessage('最多选五首哦');
@@ -133,6 +139,7 @@ export default class TabBar extends Component {
           myMusic={myMusic}
           recommendMusic={recommendMusic}
           selectedMusicIds={this.state.selectedMusicIds}
+          selectedMusicTypes={this.state.selectedMusicTypes}
           onSelectMusic={this.handleSelectMusic}
           onDeleteMusic={this.handleDeleteMusic}
           onMaskShow={this.handleMaskShow}
@@ -149,10 +156,10 @@ export default class TabBar extends Component {
           currentMusic={currentMusic}
           Actions={Actions}
           choiceFlag={this.state.choiceFlag}
+          onMessageShow={this.showMessage}
         />
         <Message
           message={this.state.message}
-          // maskItem={this.state.maskItem}
         />
       </div>
     );

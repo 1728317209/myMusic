@@ -59,7 +59,7 @@
   height: 50px;
   width: 50px;
 }
-.other .progressBarArea {
+.progressBarArea {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -11,8 +11,7 @@ export default class Play extends Component {
       music: null,
       isPlay: true,
       btnStatu: null,
-      bmt: null,
-      emt: null
+      marginLeft: 0
     };
   }
 
@@ -26,8 +25,6 @@ export default class Play extends Component {
     };
     this.setState({
       music: { ...music },
-      bmt: music.emt === 0 ? null : music.bmt,
-      emt: music.emt === 0 ? null : music.emt,
       btnStatu: {
         play: 'true'
       }
@@ -35,12 +32,11 @@ export default class Play extends Component {
   }
 
   componentDidMount() {
-    if (this.state.bmt !== null) {
-      this.audio.currentTime = this.state.bmt;
-      this.process.style.marginLeft = `${this.getProcessWidth(this.state.bmt)}%`;
+    if (this.props.bmt !== null) {
+      this.audio.currentTime = this.props.bmt;
     }
     this.setState({
-      currentTime: this.state.bmt,
+      currentTime: this.props.bmt,
       currentWidth: 0
     });
   }
@@ -53,7 +49,7 @@ export default class Play extends Component {
     return null;
   }
 
-  getCutMaskPosition = key => `${this.getProcessWidth(this.state[key])}%`;
+  getCutMaskPosition = key => `${this.getProcessWidth(this.props[key])}%`;
 
   getTimeTransform = time => {
     let second = Math.floor(time % 60);
@@ -69,21 +65,23 @@ export default class Play extends Component {
 
   isShowCutMask = key => {
     // debugger;
-    if (!this.audio || this.state[key] === null) {
+    if (!this.audio || this.props[key] === null) {
       return 'maskHide';
     }
     return 'maskShow';
   }
 
   handleAudioChange = () => {
-    const { bmt, emt } = this.state;
+    const { bmt, emt } = this.props;
     let currentWidth = 0;
+    let marginLeft = 0;
     if (bmt === null) {
       currentWidth = `${this.getProcessWidth(this.state.currentTime)}%`;
     } else {
       currentWidth = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
+      marginLeft = `${this.getProcessWidth(bmt)}%`;
       if (emt !== null) {
-        currentWidth = this.state.currentTime > this.state.emt ? `${this.getProcessWidth(emt - bmt)}%` : currentWidth;
+        currentWidth = this.state.currentTime > emt ? `${this.getProcessWidth(emt - bmt)}%` : currentWidth;
       }
     }
     if (emt !== null && this.audio.currentTime >= emt) {
@@ -92,9 +90,13 @@ export default class Play extends Component {
     if (bmt !== null && this.audio.currentTime <= bmt) {
       this.audio.currentTime = bmt;
     }
+    if (this.props.onAudioChange) {
+      this.props.onAudioChange(this.audio.currentTime);
+    }
     this.setState({
       currentTime: this.audio.currentTime,
-      currentWidth
+      currentWidth,
+      marginLeft
     });
   }
 
@@ -120,24 +122,25 @@ export default class Play extends Component {
     }
   }
 
-  handleTouchStart = e => {
-    this.startX = e.touches[0].clientX;
-    this.audio.pause();
-  }
-
   handleMovingProgressWidth = rate => {
+    const { bmt, emt } = this.props;
     let currentWidth = 0;
     let maxWidth = this.backPrecessWidth;
-    if (this.state.bmt !== null) {
-      currentWidth = (this.state.currentTime - this.state.bmt) / this.state.music.du * this.backPrecessWidth;
-      if (this.state.emt !== null) {
-        maxWidth = this.getProcessWidth(this.state.emt - this.state.bmt) / 100 * this.backPrecessWidth;
+    if (bmt !== null) {
+      currentWidth = (this.state.currentTime - bmt) / this.state.music.du * this.backPrecessWidth;
+      if (emt !== null) {
+        maxWidth = this.getProcessWidth(emt - bmt) / 100 * this.backPrecessWidth;
       }
     } else {
       currentWidth = this.state.currentTime / this.state.music.du * this.backPrecessWidth;
     }
     const newCurrentWidth = currentWidth + this.backPrecessWidth * rate;
-    return this.state.bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth;
+    return bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth;
+  }
+
+  handleTouchStart = e => {
+    this.startX = e.touches[0].clientX;
+    this.audio.pause();
   }
 
   handleTouchMove = e => {
@@ -154,7 +157,7 @@ export default class Play extends Component {
     const currentTime = this.state.currentTime + this.state.music.du * rate;
     this.audio.currentTime = currentTime;
     this.setState({
-      currentTime: this.state.bmt !== null && currentTime > this.state.emt ? this.state.emt : currentTime,
+      currentTime: this.props.bmt !== null && currentTime > this.props.emt ? this.props.emt : currentTime,
       currentWidth: this.handleMovingProgressWidth(rate)
     });
     this.audio.play();
@@ -170,55 +173,59 @@ export default class Play extends Component {
     });
   }
 
+  renderProgressTime = position => {
+    const { ProgressTimePosition, music } = this.props;
+    if (position === ProgressTimePosition) {
+      return <div>{`${this.getTimeTransform(this.state.currentTime)}/${this.getTimeTransform(music.du)}`}</div>;
+    }
+    return null;
+  }
+
   render() {
     const { music } = this.props;
-    const { currentTime, btnStatu } = this.state;
-    console.log('VVVVVVVVVVVVVVVVVVVVVVVVV', this.props.audio);
-    console.log('VVVVVVVVVVVVVVVVVVVVVVVVVV', this.props.audio ? this.props.audio.currentTime : null);
+    const { btnStatu } = this.state;
     return (
-      <div className="Play">
-        <div className="play-close" onClick={() => this.props.onMaskShow(null)}>关闭</div>
-        <div className="play-music-name">{music.name}</div>
-        <div>{`${this.getTimeTransform(currentTime)}/${this.getTimeTransform(music.du)}`}</div>
-        <div className="progressBarArea">
-          <div className="progressBarArea">
-            <div className="progressBar">
-              <img src={this.renderImgs.play[btnStatu.play]} className="pause-or-play" alt="" onClick={this.handlePlay} />
-              <div
-                className="back-div"
-                ref={backPrecess => {
+      <div className="progressBarArea">
+        {
+          this.renderProgressTime('top')
+        }
+        <div className="progressBar">
+          <img src={this.renderImgs.play[btnStatu.play]} className="pause-or-play" alt="" onClick={this.handlePlay} />
+          <div
+            className="back-div"
+            ref={backPrecess => {
                   this.backPrecessWidth = backPrecess ? backPrecess.offsetWidth : null;
                   this.backOffsetLeft = backPrecess ? backPrecess.offsetLeft : null;
                 }}
-                onClick={this.handleProgressClick}
-              >
-                <img
-                  src={imgs.music_start}
-                  alt=""
-                  style={{ marginLeft: this.getCutMaskPosition('bmt') }}
-                  className={`cutImgInProgress ${this.isShowCutMask('bmt')}`}
-                />
-                <img
-                  src={imgs.music_finish}
-                  alt=""
-                  style={{ marginLeft: this.getCutMaskPosition('emt') }}
-                  className={`cutImgInProgress ${this.isShowCutMask('emt')}`}
-                />
-                <div
-                  ref={process => { this.process = process; }}
-                  style={{ width: this.state.currentWidth }}
-                  className="back-div-red"
-                />
-                <div
-                  className="circle"
-                  onTouchStart={this.handleTouchStart}
-                  onTouchMove={this.handleTouchMove}
-                  onTouchEnd={this.handleTouchEnd}
-                />
-              </div>
-            </div>
+            onClick={this.handleProgressClick}
+          >
+            <img
+              src={imgs.music_start}
+              alt=""
+              style={{ marginLeft: this.getCutMaskPosition('bmt') }}
+              className={`cutImgInProgress ${this.isShowCutMask('bmt')}`}
+            />
+            <img
+              src={imgs.music_finish}
+              alt=""
+              style={{ marginLeft: this.getCutMaskPosition('emt') }}
+              className={`cutImgInProgress ${this.isShowCutMask('emt')}`}
+            />
+            <div
+              style={{ width: this.state.currentWidth, marginLeft: this.state.marginLeft }}
+              className="back-div-red"
+            />
+            <div
+              className="circle"
+              onTouchStart={this.handleTouchStart}
+              onTouchMove={this.handleTouchMove}
+              onTouchEnd={this.handleTouchEnd}
+            />
           </div>
         </div>
+        {
+          this.renderProgressTime('bottom')
+        }
         <audio
           ref={audio => { this.audio = audio; }}
           src={music.m_url}

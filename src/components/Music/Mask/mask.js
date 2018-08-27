@@ -43,6 +43,7 @@ export default class Mask extends Component {
             music={currentMusic}
             onMaskShow={onMaskShow}
             onCutMusic={Actions.cutMusic}
+            onMessageShow={this.props.onMessageShow}
           />
         );
       }

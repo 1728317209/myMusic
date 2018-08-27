@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Message from '../Message/Message';
 import { footState } from './footState';
 import './index.css';
 
@@ -7,13 +6,17 @@ export default class Foot extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...footState,
-      message: null
+      ...footState
     };
   }
 
   getItemStatus = () => {
-    const { selectedMusicIds, choiceFlag, currentMusic } = this.props;
+    const {
+      selectedMusicIds,
+      selectedMusicTypes,
+      choiceFlag,
+      currentMusic
+    } = this.props;
     if (choiceFlag) { // 单选
       if (selectedMusicIds.length === 0) { // 没有选中歌曲
         return {
@@ -25,6 +28,15 @@ export default class Foot extends Component {
         };
       }
       // 有选中歌曲
+      if (selectedMusicTypes.includes('推荐音乐')) {
+        return {
+          play: 'active',
+          rename: 'notActive',
+          cut: 'notActive',
+          share: 'notActive',
+          delete: 'notActive'
+        };
+      }
       const itemStatus = {
         play: 'active',
         rename: null,
@@ -46,7 +58,7 @@ export default class Foot extends Component {
       share: 'notActive',
       delete: 'active'
     };
-    if (selectedMusicIds.length === 0) {
+    if (selectedMusicIds.length === 0 || selectedMusicTypes.includes('推荐音乐')) {
       itemStatus.delete = 'notActive';
     }
     return itemStatus;

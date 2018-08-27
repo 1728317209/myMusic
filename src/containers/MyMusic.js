@@ -23,6 +23,7 @@ class MyMusic extends React.Component {
       Actions,
       currentMusic
     } = this.props;
+    console.log('VVVVVVVVVVVVVVVVVVVVVV', myMusic, recommendMusic);
     return (
       <div>
         <Music

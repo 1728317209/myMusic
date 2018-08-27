@@ -13,6 +13,7 @@ export default class TabBarBody extends Component {
       myMusic,
       recommendMusic,
       selectedMusicIds,
+      selectedMusicTypes,
       onSelectMusic,
       onDeleteMusic,
       onMaskShow,
@@ -41,6 +42,7 @@ export default class TabBarBody extends Component {
             selectedMusicIds={selectedMusicIds}
             currentMusic={currentMusic}
             onMessageShow={onMessageShow}
+            selectedMusicTypes={selectedMusicTypes}
           />
         </div>
       );
