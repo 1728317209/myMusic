@@ -104,10 +104,10 @@
   width: 6px;
   height: 20px;
 }
-.maskHide {
+.markHide {
   display: none;
 }
-.maskShow {
+.markShow {
   display: block;
 }
 
@@ -168,7 +168,7 @@
 }
 .textArea {
   font-size: 18px;
-  padding: 20px 30px;
+  padding: 30px 30px;
   text-align: center;
   border-bottom: .5px solid #ddd;
   height: 70%;

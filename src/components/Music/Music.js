@@ -3,12 +3,7 @@ import Head from './Head/head';
 import TabBar from './TabBar/tabBar';
 
 const Music = ({
-  user,
-  myMusic,
-  recommendMusic,
-  currentMusic,
-  selectedMusicIds,
-  Actions
+  user, myMusic, recommendMusic, currentMusic, selectedMusicIds, Actions
 }) => (
   <div className="Music">
     <Head

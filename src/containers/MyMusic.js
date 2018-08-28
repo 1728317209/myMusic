@@ -14,12 +14,7 @@ class MyMusic extends React.Component {
 
   render() {
     const {
-      user,
-      myMusic,
-      recommendMusic,
-      Actions,
-      currentMusic,
-      selectedMusicIds
+      user, myMusic, recommendMusic, Actions, currentMusic, selectedMusicIds
     } = this.props;
     return (
       <div>

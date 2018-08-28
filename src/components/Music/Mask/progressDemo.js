@@ -64,12 +64,12 @@ export default class Play extends Component {
     return `${minite}:${second}`;
   }
 
-  isShowCutMask = key => {
-    // debugger;
+  isShowCutMark = key => {
+    // if (!this.audio || this.audio.readyState < 3 || this.props[key] === null) {
     if (!this.audio || this.props[key] === null) {
-      return 'maskHide';
+      return 'markHide';
     }
-    return 'maskShow';
+    return 'markShow';
   }
 
   handleAudioChange = () => {
@@ -199,13 +199,13 @@ export default class Play extends Component {
             src={imgs.music_start}
             alt=""
             style={{ marginLeft: this.getCutMaskPosition('bmt') }}
-            className={`cutImgInProgress ${this.isShowCutMask('bmt')}`}
+            className={`cutImgInProgress ${this.isShowCutMark('bmt')}`}
           />
           <img
             src={imgs.music_finish}
             alt=""
             style={{ marginLeft: this.getCutMaskPosition('emt') }}
-            className={`cutImgInProgress ${this.isShowCutMask('emt')}`}
+            className={`cutImgInProgress ${this.isShowCutMark('emt')}`}
           />
           <div
             style={{ marginLeft: this.state.marginLeft, width: this.state.currentWidth }}

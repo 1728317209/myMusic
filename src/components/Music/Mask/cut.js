@@ -90,7 +90,6 @@ export default class Cut extends Component {
           clear: true
         }
       });
-      this.handleCutMusic();
     } else {
       this.props.onMessageShow('截取音乐长度不能小于10S哦！');
     }
