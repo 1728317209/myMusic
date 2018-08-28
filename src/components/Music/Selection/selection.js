@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 
 const Selection = ({ choiceFlag, onChoice }) => (
+  // 单选和多选组件
   <div className="Selection">
     <div className="select-div" onClick={() => onChoice(true)}>
       <div className="big-select-btn" >

@@ -3,6 +3,7 @@ import * as imgs from '../../../Resource/Resource';
 import './mask.css';
 
 export default class Play extends Component {
+  // 进度条组件
   constructor(props) {
     super(props);
     this.state = {
@@ -82,9 +83,6 @@ export default class Play extends Component {
       currentWidth = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
       if (emt !== null) {
         currentWidth = this.state.currentTime > emt ? `${this.getProcessWidth(emt - bmt)}%` : currentWidth;
-        if (this.audio.currentTime <= bmt || this.audio.currentTime >= emt) {
-          this.audio.currentTime = bmt;
-        }
       }
     }
     if (bmt !== null && this.audio.currentTime <= bmt) {
@@ -128,16 +126,16 @@ export default class Play extends Component {
   handleMovingProgressWidth = rate => {
     const { bmt, emt } = this.props;
     let currentWidth = 0;
-    let maxWidth = this.backPrecessWidth;
+    let maxWidth = this.backProgressWidth;
     if (bmt !== null) {
-      currentWidth = (this.state.currentTime - bmt) / this.state.music.du * this.backPrecessWidth;
+      currentWidth = (this.state.currentTime - bmt) / this.state.music.du * this.backProgressWidth;
       if (emt !== null) {
-        maxWidth = this.getProcessWidth(emt - bmt) / 100 * this.backPrecessWidth;
+        maxWidth = this.getProcessWidth(emt - bmt) / 100 * this.backProgressWidth;
       }
     } else {
-      currentWidth = this.state.currentTime / this.state.music.du * this.backPrecessWidth;
+      currentWidth = this.state.currentTime / this.state.music.du * this.backProgressWidth;
     }
-    const newCurrentWidth = currentWidth + this.backPrecessWidth * rate;
+    const newCurrentWidth = currentWidth + this.backProgressWidth * rate;
     return bmt !== null && newCurrentWidth > maxWidth ? maxWidth : newCurrentWidth;
   }
 
@@ -148,7 +146,7 @@ export default class Play extends Component {
 
   handleTouchMove = e => {
     const movingX = e.touches[0].clientX;
-    const rate = (movingX - this.startX) / this.backPrecessWidth;
+    const rate = (movingX - this.startX) / this.backProgressWidth;
     this.setState({
       currentWidth: this.handleMovingProgressWidth(rate)
     });
@@ -156,7 +154,7 @@ export default class Play extends Component {
 
   handleTouchEnd = e => {
     const endX = e.changedTouches[0].clientX;
-    const rate = (endX - this.startX) / this.backPrecessWidth;
+    const rate = (endX - this.startX) / this.backProgressWidth;
     const currentTime = this.state.currentTime + this.state.music.du * rate;
     this.audio.currentTime = currentTime;
     this.setState({
@@ -168,7 +166,7 @@ export default class Play extends Component {
 
   handleProgressClick = e => {
     const currentWidth = e.clientX - this.backOffsetLeft;
-    const rate = currentWidth / this.backPrecessWidth;
+    const rate = currentWidth / this.backProgressWidth;
     const currentTime = rate * this.state.music.du;
     this.audio.currentTime = currentTime;
     this.setState({
@@ -191,9 +189,9 @@ export default class Play extends Component {
         <img src={this.renderImgs.play[btnStatu.play]} className="pause-or-play" alt="" onClick={this.handlePlay} />
         <div
           className="back-div"
-          ref={backPrecess => {
-                  this.backPrecessWidth = backPrecess ? backPrecess.offsetWidth : null;
-                  this.backOffsetLeft = backPrecess ? backPrecess.offsetLeft : null;
+          ref={backProgress => {
+                  this.backProgressWidth = backProgress ? backProgress.offsetWidth : null;
+                  this.backOffsetLeft = backProgress ? backProgress.offsetLeft : null;
                 }}
           onClick={this.handleProgressClick}
         >
@@ -241,6 +239,7 @@ export default class Play extends Component {
           ref={audio => { this.audio = audio; }}
           src={music.m_url}
           autoPlay="autoPlay"
+          loop
           onTimeUpdate={this.handleAudioChange}
         >
           Your browser does not support the audio element.

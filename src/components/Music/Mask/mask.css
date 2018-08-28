@@ -150,6 +150,10 @@
   position: absolute;
   top: 8px;
   right: 20px;
+  width: 45px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .Delete {

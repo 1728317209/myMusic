@@ -104,44 +104,44 @@ export default class TabBar extends Component {
 
   render() {
     const {
-      myMusic,
-      recommendMusic,
-      currentMusic,
-      Actions
+      myMusic, recommendMusic, currentMusic, Actions
     } = this.props;
+    const {
+      switchTabFlag, choiceFlag, isMaskActive, maskItem, message, selectedMusicIds, selectedMusicTypes
+    } = this.state;
     return (
       <div className="TabBar">
         <TabBarBtn
-          switchTabFlag={this.state.switchTabFlag}
+          switchTabFlag={switchTabFlag}
           onSwitchTab={this.handleSelectTab}
         />
         <TabBarBody
-          switchTabFlag={this.state.switchTabFlag}
-          choiceFlag={this.state.choiceFlag}
+          switchTabFlag={switchTabFlag}
+          choiceFlag={choiceFlag}
           onChoice={this.handleChoice}
           myMusic={myMusic}
           recommendMusic={recommendMusic}
-          selectedMusicIds={this.state.selectedMusicIds}
-          selectedMusicTypes={this.state.selectedMusicTypes}
+          selectedMusicIds={selectedMusicIds}
+          selectedMusicTypes={selectedMusicTypes}
           onSelectMusic={this.handleSelectMusic}
           onMaskShow={this.handleMaskShow}
           currentMusic={currentMusic}
           onMessageShow={this.showMessage}
         />
         <Mask
-          isActive={this.state.isMaskActive}
+          isActive={isMaskActive}
           onMaskShow={this.handleMaskShow}
-          maskItem={this.state.maskItem}
-          selectedMusicIds={this.state.selectedMusicIds}
+          maskItem={maskItem}
+          selectedMusicIds={selectedMusicIds}
           onDeleteMusic={this.handleDeleteMusic}
           onRenameMusic={this.handleRenameMusic}
           currentMusic={currentMusic}
           Actions={Actions}
-          choiceFlag={this.state.choiceFlag}
+          choiceFlag={choiceFlag}
           onMessageShow={this.showMessage}
         />
         <Message
-          message={this.state.message}
+          message={message}
         />
       </div>
     );

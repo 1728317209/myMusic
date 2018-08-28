@@ -1,7 +1,7 @@
 .myMusicBody {
   overflow: auto;
   height: 82vh;
-  /* transform: translate3d(0px, 0px, 0px); */
+  position: relative;
 }
 .TabBar {
   width: 100%;
@@ -23,10 +23,34 @@
   font-size: 15px;
 }
 .span-true {
-  color: #ff2064;
+  /* color: #ff2064; */
+  animation:tab-appear 100ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:tab-appear 100ms ease-out; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
 }
 .span-false {
-  color: black;
+  /* color: black; */
+  animation:tab-fade 100ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:tab-fade 100ms ease-out; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
+}
+@keyframes tab-appear {
+  from {
+    color: black;
+  }
+  to {
+    color: #ff2064;
+  }
+}
+@keyframes tab-fade {
+  from {
+    color: #ff2064;
+  }
+  to {
+    color: black;
+  }
 }
 .mine {
   width: 100px;
@@ -57,6 +81,24 @@
   justify-content: space-around;
   align-items: center;
 }
+@keyframes appear {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: #ff2064;
+    box-shadow:0 4px 10px 0 rgba(255,116,159,0.60);
+  }
+}
+@keyframes fade {
+  from {
+    background-color: #ff2064;
+    box-shadow:0 4px 10px 0 rgba(255,116,159,0.60);
+  }
+  to {
+    background-color: white;
+  }
+}
 .bottom {
   line-height: 3px;
   width: 30px;
@@ -65,12 +107,16 @@
   border-radius: 50px;
 }
 .bottom-true {
-  /* transform: translate3d(96.5px, 0px, 0px); */
-  background-color: #ff2064;
-  box-shadow:0 4px 10px 0 rgba(255,116,159,0.60);
+  animation:appear 300ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:appear 300ms ease-out; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
 }
 .bottom-false {
-  background-color: white;
+  animation:fade 300ms;
+  animation-fill-mode: forwards;
+  -webkit-animation:fade 300ms ease-out; /* Safari and Chrome */
+  -webkit-animation-fill-mode: forwards;
 }
 hr{
   margin: 0px 0;

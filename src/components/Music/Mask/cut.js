@@ -90,6 +90,7 @@ export default class Cut extends Component {
           clear: true
         }
       });
+      this.handleCutMusic();
     } else {
       this.props.onMessageShow('截取音乐长度不能小于10S哦！');
     }
@@ -174,7 +175,7 @@ export default class Cut extends Component {
             bmt={bmt}
             emt={emt}
             onAudioChange={this.handleAudioChange}
-            ProgressTimePosition="bottom"
+            ProgressTimePosition="bottom" // 进度条时间的位置 bottom or top
           />
         </div>
         <div className="cut-done" onClick={this.handleDone}>完成</div>

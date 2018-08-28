@@ -1,21 +1,21 @@
-# 使用方法
+# 结营作业(二)
 
-点击右上角的fork按钮fork老师的代码到自己的Git中：
+1、store：
+* 接口中拉取的数据(扁平化后)
+* selectedMusicIds[]：存储当前选中的音乐
 
-![2](./helpImg/2.png)
+2、reducer拆分：
+* 本次作业中，并没有拆分reducer。
+* 因为store中并不存储UI相关数据，reducer并不控制UI，reducer处理的action类型相同且量不大。
+* action也没拆
 
+3、组件结构
+![1](./helpImg/Music.png)
+* 除了Head都可以看作是TabBar的子组件
+* Message：消息提示组件，在Cut、Foot、MusicList部分都有用到
+* Selection：单选和多选组件
+* Cut组件和Play组件中的进度条部分复用ProgressDemo
 
-
-fork之后，打开自己的profile页，进入刚刚fork过来的项目。
-
-然后在自己的git bash控制台里输入：git clone 自己的git仓库地址
-
-
-
-仓库地址的查看：绿色的clone or download按钮点击后可查看
-
-![1](./helpImg/1.png)
-
-
-
-clone到本地之后就可以编写了，之后提交的代码就会自动进入自己fork的仓库中。
+4、问题
+* Message组件的显示or隐藏问题
+* 进度条标记起点和清除标记时有一点点的延时
