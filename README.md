@@ -28,7 +28,9 @@
 * 调用ProgressDemo组件，传入bmt、emt、以及获取audio当前时间的回调函数。
 
 6、ProgressDemo组件
-* state：
+* state:
+![2](./helpImg/ProgressDemoState.png)
+
 
 4、问题
 * Message组件的显示or隐藏问题
