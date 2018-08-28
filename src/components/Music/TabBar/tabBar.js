@@ -83,7 +83,7 @@ export default class TabBar extends Component {
     this.handleMaskShow(null);
   }
 
-  handleMaskShow = maskItem => {
+  handleMaskShow = maskItem => { // 返回值可以是某个item或null
     this.setState({
       message: null,
       isMaskActive: !this.state.isMaskActive,
