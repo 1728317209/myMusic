@@ -36,7 +36,7 @@ class MyMusic extends React.Component {
   }
 }
 
-const mergeEntities = (ids, entities) => {
+const mergeEntities = (ids, entities) => { // 组装扁平化之后的数据
   if (ids && ids.length) {
     return ids.map(id => entities[id]);
   }
@@ -61,7 +61,7 @@ function mapStateToProps(state) {
       myMusicList: mergeEntities(myMusicList, musicEntities)
     },
     recommendMusic: mergeEntities(recommendMusicList, musicEntities),
-    currentMusic: musicEntities[selectedMusicIds[0]],
+    currentMusic: selectedMusicIds.length ? musicEntities[selectedMusicIds[0]] : null,
     selectedMusicIds
   };
 }

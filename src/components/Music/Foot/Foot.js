@@ -12,10 +12,7 @@ export default class Foot extends Component {
 
   getItemStatus = () => {
     const {
-      selectedMusicIds,
-      selectedMusicTypes,
-      choiceFlag,
-      currentMusic
+      selectedMusicIds, selectedMusicTypes, choiceFlag, currentMusic
     } = this.props;
     const itemStatus = {
       play: 'notActive',
@@ -25,7 +22,7 @@ export default class Foot extends Component {
       delete: 'notActive'
     };
     if (choiceFlag) { // 单选
-      if (selectedMusicIds.length === 0) {
+      if (selectedMusicIds.length === 0) { // 没有选中歌曲
         //
       } else if (selectedMusicTypes.includes('推荐音乐')) { // 有选中歌曲 包括推荐歌曲 只能播放
         itemStatus.play = 'active';
@@ -87,7 +84,9 @@ export default class Foot extends Component {
     return null;
   }
 
-  renderFoot = itemStatus => this.state.list.map((item, idx) => {
+  renderFoot = () => this.state.list.map((item, idx) => {
+    // itemStatus决定了渲染图片、点击方法
+    const itemStatus = this.getItemStatus();
     const { entities } = this.state;
     const status = itemStatus[item];
     return (
@@ -99,11 +98,10 @@ export default class Foot extends Component {
   })
 
   render() {
-    const itemStatus = this.getItemStatus();
     return (
       <div className="Foot">
         {
-          this.renderFoot(itemStatus)
+          this.renderFoot()
         }
       </div>
     );

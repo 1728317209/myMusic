@@ -103,10 +103,9 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
       };
     }
     case ActionTypes.STORE_SELECTED_MUSIC: {
-      const { ids } = action;
       return {
         ...state,
-        selectedMusicIds: ids
+        selectedMusicIds: action.ids
       };
     }
     default:

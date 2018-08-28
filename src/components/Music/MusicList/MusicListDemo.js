@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import * as imgs from '../../../Resource/Resource';
 
-export default class RenderMusicList extends Component {
+export default class MusicListDemo extends Component {
   getSelectIconClass = id => {
+    // 根据 单选or多选、选中or未选中，返回不同className
     const { choiceFlag, selectedMusicIds } = this.props;
     if (choiceFlag) {
       if (!selectedMusicIds.includes(id)) {
@@ -39,6 +40,7 @@ export default class RenderMusicList extends Component {
     }
     return null;
   };
+
   render() {
     return (
       <div className="MusicList">

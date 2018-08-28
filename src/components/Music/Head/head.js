@@ -3,9 +3,6 @@ import * as imgs from '../../../Resource/Resource';
 import './index.css';
 
 export default class Head extends Component {
-  state = {
-    //
-  }
   handleReturn = () => {
     window.alert('Go Back');
   }

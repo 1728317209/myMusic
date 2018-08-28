@@ -19,14 +19,6 @@ export default class TabBar extends Component {
     };
   }
 
-  getCurrentMusic = currentMusicId => {
-    const { myMusic, recommendMusic } = this.props;
-    if (!currentMusicId) {
-      return null;
-    }
-    return myMusic[currentMusicId] ? myMusic.myMusicList[currentMusicId] : recommendMusic[currentMusicId];
-  };
-
   handleSelectTab = key => { // 选择的哪一个TabBar
     this.setState({
       message: null,
@@ -42,7 +34,7 @@ export default class TabBar extends Component {
         selectedMusicTypes: this.state.selectedMusicTypes.length === 0 ? [] : [this.state.selectedMusicTypes[0]],
         choiceFlag: key
       });
-      this.props.Actions.storeSelectedMusic(this.state.selectedMusicIds[0]);
+      this.props.Actions.storeSelectedMusic(this.state.selectedMusicIds);
     } else {
       this.setState({
         message: null,
@@ -51,36 +43,29 @@ export default class TabBar extends Component {
     }
   }
 
+  handleSetSelectedMusicToState = (ids, types) => {
+    this.setState({
+      message: null,
+      selectedMusicIds: ids,
+      selectedMusicTypes: types
+    });
+    this.props.Actions.storeSelectedMusic(ids);
+  }
+
   handleSelectMusic = (id, type) => {
-    console.log(this.state.choiceFlag, this.state.selectedMusicIds);
     const newSelectedMusicIds = [...this.state.selectedMusicIds];
     const newSelectedMusicTypes = [...this.state.selectedMusicTypes];
     if (this.state.choiceFlag) { // 如果是单选状态
-      this.setState({
-        message: null,
-        selectedMusicIds: [id],
-        selectedMusicTypes: [type]
-      });
-      this.props.Actions.storeSelectedMusic([id]);
+      this.handleSetSelectedMusicToState([id], [type]);
     } else if (newSelectedMusicIds.includes(id)) { // 如果是多选状态 已选中
       const idx = newSelectedMusicIds.indexOf(id);
       newSelectedMusicIds.splice(idx, 1);
       newSelectedMusicTypes.splice(idx, 1);
-      this.setState({
-        message: null,
-        selectedMusicIds: newSelectedMusicIds,
-        selectedMusicTypes: newSelectedMusicTypes
-      });
-      this.props.Actions.storeSelectedMusic(newSelectedMusicIds);
+      this.handleSetSelectedMusicToState(newSelectedMusicIds, newSelectedMusicTypes);
     } else if (newSelectedMusicIds.length < 5) { // 如果是多选状态 未选中 还装得下
       newSelectedMusicIds.push(id);
       newSelectedMusicTypes.push(type);
-      this.setState({
-        message: null,
-        selectedMusicIds: newSelectedMusicIds,
-        selectedMusicTypes: newSelectedMusicTypes
-      });
-      this.props.Actions.storeSelectedMusic(newSelectedMusicIds);
+      this.handleSetSelectedMusicToState(newSelectedMusicIds, newSelectedMusicTypes);
     } else {
       this.showMessage('最多选五首哦');
     }
@@ -128,7 +113,7 @@ export default class TabBar extends Component {
       <div className="TabBar">
         <TabBarBtn
           switchTabFlag={this.state.switchTabFlag}
-          onSelectTab={this.handleSelectTab}
+          onSwitchTab={this.handleSelectTab}
         />
         <TabBarBody
           switchTabFlag={this.state.switchTabFlag}
@@ -139,7 +124,6 @@ export default class TabBar extends Component {
           selectedMusicIds={this.state.selectedMusicIds}
           selectedMusicTypes={this.state.selectedMusicTypes}
           onSelectMusic={this.handleSelectMusic}
-          onDeleteMusic={this.handleDeleteMusic}
           onMaskShow={this.handleMaskShow}
           currentMusic={currentMusic}
           onMessageShow={this.showMessage}

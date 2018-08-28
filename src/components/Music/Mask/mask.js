@@ -7,10 +7,6 @@ import Rename from './rename';
 import './mask.css';
 
 export default class Mask extends Component {
-  state = {
-    //
-  };
-
   getMaskClassName = () => {
     if (!this.props.isActive) {
       return 'mask hideMask';
@@ -71,8 +67,7 @@ export default class Mask extends Component {
     }
   }
   render() {
-    return (
-      <div className="Mask">
+    return (11e</div>lassName="Mask">
         <div className={this.getMaskClassName()} onClick={() => this.props.onMaskShow(null)} />
         {
           this.renderMaskBody()

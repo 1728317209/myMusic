@@ -2,18 +2,6 @@ import { normalize } from 'normalizr';
 import * as ActionTypes from '../const/ActionTypes';
 import * as Schema from '../schema/index';
 
-export function add() {
-  return {
-    type: ActionTypes.ADD
-  };
-}
-
-export function remove() {
-  return {
-    type: ActionTypes.REMOVE
-  };
-}
-
 export function fetchLoginInfo(mid) {
   return {
     SERVER_API: {

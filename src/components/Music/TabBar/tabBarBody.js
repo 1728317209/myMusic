@@ -7,18 +7,9 @@ import './index.css';
 export default class TabBarBody extends Component {
   renderTabBarBody = () => {
     const {
-      switchTabFlag,
-      choiceFlag,
-      onChoice,
-      myMusic,
-      recommendMusic,
-      selectedMusicIds,
-      selectedMusicTypes,
-      onSelectMusic,
-      onDeleteMusic,
-      onMaskShow,
-      currentMusic,
-      onMessageShow
+      myMusic, recommendMusic, currentMusic,
+      switchTabFlag, choiceFlag, selectedMusicIds, selectedMusicTypes,
+      onChoice, onSelectMusic, onMaskShow, onMessageShow
     } = this.props;
 
     if (switchTabFlag === 'mine') {
@@ -36,7 +27,6 @@ export default class TabBarBody extends Component {
             onSelectMusic={onSelectMusic}
           />
           <Foot
-            onDeleteMusic={onDeleteMusic}
             onMaskShow={onMaskShow}
             choiceFlag={choiceFlag}
             selectedMusicIds={selectedMusicIds}

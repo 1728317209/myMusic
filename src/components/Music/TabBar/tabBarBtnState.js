@@ -5,12 +5,12 @@ export const others = {
 };
 
 export const tabBarBtnState = {
-  current: 'mine',
+  currentItem: 'mine',
   list: ['mine', 'search', 'upload'],
   entities: {
     mine: {
       title: '我的音乐',
-      status: 'selected',
+      status: 'selected', // 默认选中我的音乐
       img: {
         selected: imgs.my_music,
         unSelected: imgs.my_music_gray
@@ -33,7 +33,7 @@ export const tabBarBtnState = {
       }
     }
   },
-  classInfo: {
+  classNameInfo: {
     selected: { spanClass: 'span-true', bottomClass: 'bottom-true' },
     unSelected: { spanClass: 'span-false', bottomClass: 'bottom-false' }
   }

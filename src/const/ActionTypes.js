@@ -1,6 +1,3 @@
-export const ADD = 'ADD';
-export const REMOVE = 'REMOVE';
-
 export const FETCH_LOGIN_INFO = 'FETCH_LOGIN_INFO';
 export const FETCH_MY_MUSIC_LIST_INFO = 'FETCH_MY_MUSIC_LIST_INFO';
 export const FETCH_RECOMMEND_LIST_INFO = 'FETCH_RECOMMEND_LIST_INFO';
