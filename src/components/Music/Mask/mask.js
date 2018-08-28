@@ -67,7 +67,8 @@ export default class Mask extends Component {
     }
   }
   render() {
-    return (11e</div>lassName="Mask">
+    return (
+      <div className="Mask">
         <div className={this.getMaskClassName()} onClick={() => this.props.onMaskShow(null)} />
         {
           this.renderMaskBody()

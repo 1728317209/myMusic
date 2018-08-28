@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import './mask.css';
 
 export default class Delete extends Component {
-  state = {
-    //
-  };
-
   getMessage = () => {
     const { choiceFlag, currentMusic, selectedMusicIds } = this.props;
     if (choiceFlag) { // 单选
@@ -13,6 +9,7 @@ export default class Delete extends Component {
     }
     return `确定要删除这${selectedMusicIds.length}首音乐吗？`;
   }
+
   render() {
     return (
       <div className="Delete">

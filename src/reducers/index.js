@@ -1,24 +1,5 @@
-// import { combineReducers } from 'redux';
-// import fetchMusicInfo from './fetchMusicInfo';
-// import operateMusic from './operateMusic';
-
-// export default combineReducers({
-//   fetchMusicInfo,
-//   operateMusic
-// });
-
 import * as ActionTypes from '../const/ActionTypes';
 import { MusicInfo } from './InitState';
-
-export function getNewMusicIds(ids1, ids2) {
-  ids1.forEach(id => {
-    const idx = ids2.indexOf(id);
-    if (idx !== -1) {
-      ids2.splice(idx, 1);
-    }
-  });
-  return ids2;
-}
 
 export default function fetchMusicInfo(state = MusicInfo, action) {
   switch (action.type) {
@@ -66,11 +47,18 @@ export default function fetchMusicInfo(state = MusicInfo, action) {
     }
     case ActionTypes.DELETE_MUSIC: {
       const { musicIds } = action;
+      const newMusicIds = state.myMusic.myMusicList;
+      musicIds.forEach(id => {
+        const idx = newMusicIds.indexOf(id);
+        if (idx !== -1) {
+          newMusicIds.splice(idx, 1);
+        }
+      });
       return {
         ...state,
         myMusic: {
           ...state.myMusic,
-          myMusicList: getNewMusicIds(musicIds, state.myMusic.myMusicList)
+          myMusicList: newMusicIds
         },
         selectedMusicIds: []
       };

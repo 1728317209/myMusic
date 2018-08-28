@@ -6,11 +6,11 @@ export default class Play extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTime: null,
-      currentWidth: 0,
       music: null,
       isPlay: true,
       btnStatu: null,
+      currentTime: null,
+      currentWidth: 0,
       marginLeft: 0
     };
   }
@@ -78,19 +78,22 @@ export default class Play extends Component {
     if (bmt === null) {
       currentWidth = `${this.getProcessWidth(this.state.currentTime)}%`;
     } else {
-      currentWidth = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
       marginLeft = `${this.getProcessWidth(bmt)}%`;
+      currentWidth = `${this.getProcessWidth(this.state.currentTime - bmt)}%`;
       if (emt !== null) {
         currentWidth = this.state.currentTime > emt ? `${this.getProcessWidth(emt - bmt)}%` : currentWidth;
+        if (this.audio.currentTime <= bmt || this.audio.currentTime >= emt) {
+          this.audio.currentTime = bmt;
+        }
       }
-    }
-    if (emt !== null && this.audio.currentTime >= emt) {
-      this.audio.currentTime = bmt;
     }
     if (bmt !== null && this.audio.currentTime <= bmt) {
       this.audio.currentTime = bmt;
     }
-    if (this.props.onAudioChange) {
+    if (emt !== null && this.audio.currentTime >= emt) {
+      this.audio.currentTime = bmt;
+    }
+    if (this.props.onAudioChange) { // 如果父组件有onAudioChange方法(cut组件有、play组件没有)
       this.props.onAudioChange(this.audio.currentTime);
     }
     this.setState({
@@ -181,48 +184,56 @@ export default class Play extends Component {
     return null;
   }
 
+  renderProgressBar = () => {
+    const { btnStatu } = this.state;
+    return (
+      <div className="progressBar">
+        <img src={this.renderImgs.play[btnStatu.play]} className="pause-or-play" alt="" onClick={this.handlePlay} />
+        <div
+          className="back-div"
+          ref={backPrecess => {
+                  this.backPrecessWidth = backPrecess ? backPrecess.offsetWidth : null;
+                  this.backOffsetLeft = backPrecess ? backPrecess.offsetLeft : null;
+                }}
+          onClick={this.handleProgressClick}
+        >
+          <img
+            src={imgs.music_start}
+            alt=""
+            style={{ marginLeft: this.getCutMaskPosition('bmt') }}
+            className={`cutImgInProgress ${this.isShowCutMask('bmt')}`}
+          />
+          <img
+            src={imgs.music_finish}
+            alt=""
+            style={{ marginLeft: this.getCutMaskPosition('emt') }}
+            className={`cutImgInProgress ${this.isShowCutMask('emt')}`}
+          />
+          <div
+            style={{ marginLeft: this.state.marginLeft, width: this.state.currentWidth }}
+            className="back-div-red"
+          />
+          <div
+            className="circle"
+            onTouchStart={this.handleTouchStart}
+            onTouchMove={this.handleTouchMove}
+            onTouchEnd={this.handleTouchEnd}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { music } = this.props;
-    const { btnStatu } = this.state;
     return (
       <div className="progressBarArea">
         {
           this.renderProgressTime('top')
         }
-        <div className="progressBar">
-          <img src={this.renderImgs.play[btnStatu.play]} className="pause-or-play" alt="" onClick={this.handlePlay} />
-          <div
-            className="back-div"
-            ref={backPrecess => {
-                  this.backPrecessWidth = backPrecess ? backPrecess.offsetWidth : null;
-                  this.backOffsetLeft = backPrecess ? backPrecess.offsetLeft : null;
-                }}
-            onClick={this.handleProgressClick}
-          >
-            <img
-              src={imgs.music_start}
-              alt=""
-              style={{ marginLeft: this.getCutMaskPosition('bmt') }}
-              className={`cutImgInProgress ${this.isShowCutMask('bmt')}`}
-            />
-            <img
-              src={imgs.music_finish}
-              alt=""
-              style={{ marginLeft: this.getCutMaskPosition('emt') }}
-              className={`cutImgInProgress ${this.isShowCutMask('emt')}`}
-            />
-            <div
-              style={{ marginLeft: this.state.marginLeft, width: this.state.currentWidth }}
-              className="back-div-red"
-            />
-            <div
-              className="circle"
-              onTouchStart={this.handleTouchStart}
-              onTouchMove={this.handleTouchMove}
-              onTouchEnd={this.handleTouchEnd}
-            />
-          </div>
-        </div>
+        {
+          this.renderProgressBar()
+        }
         {
           this.renderProgressTime('bottom')
         }

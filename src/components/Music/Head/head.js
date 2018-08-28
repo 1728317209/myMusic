@@ -8,7 +8,7 @@ export default class Head extends Component {
   }
 
   handleDone = () => {
-    window.alert(`当前选中了${this.props.selectedMusicIds}`)
+    window.alert(`当前选中了【${this.props.selectedMusicIds}】`);
   }
 
   render() {
