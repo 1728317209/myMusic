@@ -32,7 +32,7 @@
 
 ## react
 
-1、所见即所得、数据驱动页面渲染
+1、数据驱动页面渲染
 
 2、state：管理内部数据
 
@@ -47,9 +47,6 @@
 * 复用：抽出共有部分复用
 * 数据同时被两个组件调用，提升数据层级
 
-6、reducer拆分：
-* combineReducers()
-
 ## redux
 
 1、mapDispatchToProps(dispatch)
@@ -58,7 +55,10 @@
 
 3、bindActionCreators(actions, dispatch)
 
-4、connect(mapStateToProps, mapDispatchToProps)(className)
+4、connect(mapStateToProps, mapDispatchToProps)(Container)
+
+5、reducer拆分：
+* combineReducers()
 
 ## 中间件
 
@@ -163,7 +163,3 @@
 * 将有Token这个参数，但还没有赋值的action拦截下来，存入一个数组。Object.keys(params).includes('token') && !params.token。
 * 给拉去个人信息的action中增加一个回调函数，next到serverApi。拉到信心后执行回调函数，login就得到了Token。
 * 将得到的Token赋给被拦截的action中，next。
-
-4、问题
-* Message组件的显示or隐藏问题
-* 进度条标记起点和清除标记时有一点点的延时

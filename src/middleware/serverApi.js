@@ -12,7 +12,6 @@ const callServerApi = (endpoint, params, normalizeFuc) => new Promise((resolve, 
     data: params
   }).then(res => {
     if (res.data.ret === 1) {
-      console.log('cccccccccccccccccccc', res.data.data);
       if (params.getToken) {
         params.getToken(res.data.data);
       }
@@ -33,7 +32,6 @@ export default store => next => action => {
     params,
     normalizeFuc
   } = action.SERVER_API;
-  console.log('pppppppppppppppppppppppppp', action);
 
   if (typeof type !== 'string') {
     throw new Error('type shoudle be a string');
