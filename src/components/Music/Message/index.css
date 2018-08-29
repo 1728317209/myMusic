@@ -6,9 +6,9 @@
   z-index: 500;
   justify-content: space-around;
   align-items: center;
-  animation:addScore-true 3s;
+  animation:message-true 3s;
   animation-fill-mode: forwards;
-  -webkit-animation:addScore-true 3s ease-in-out; /* Safari and Chrome */
+  -webkit-animation:message-true 3s ease-in-out; /* Safari and Chrome */
   -webkit-animation-fill-mode: forwards;
 }
 .Message-false {
@@ -19,12 +19,12 @@
   z-index: 500;
   justify-content: space-around;
   align-items: center;
-  animation:addScore-false 3s;
+  animation:message-false 3s;
   animation-fill-mode: forwards;
-  -webkit-animation:addScore-false 3s ease-in-out; /* Safari and Chrome */
+  -webkit-animation:message-false 3s ease-in-out; /* Safari and Chrome */
   -webkit-animation-fill-mode: forwards;
 }
-@keyframes addScore-true {
+@keyframes message-true {
   0% {
     opacity: 0;
     bottom: -50px;
@@ -50,7 +50,7 @@
     bottom: -50px;
   }
 }
-@keyframes addScore-false {
+@keyframes message-false {
   0% {
     opacity: 0;
     bottom: -50px;

@@ -35,11 +35,11 @@ export default class Play extends Component {
   componentDidMount() {
     if (this.props.bmt !== null) {
       this.audio.currentTime = this.props.bmt;
+      this.setState({
+        currentTime: this.props.bmt,
+        currentWidth: 0
+      });
     }
-    this.setState({
-      currentTime: this.props.bmt,
-      currentWidth: 0
-    });
   }
 
   getProcessWidth = param1 => {
