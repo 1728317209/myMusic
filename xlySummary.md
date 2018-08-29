@@ -30,31 +30,25 @@
 * function
 * =>
 
-5、class
-* 属性、方法
-* dog1 = new Dog('dog1');
-* super()
-
 ## react
 
-1、npm创建react项目
+1、所见即所得、数据驱动页面渲染
 
-2、所见即所得、数据驱动页面渲染
+2、state：管理内部数据
 
-4、state：管理内部数据
+3、props：传输数据的介质(水管)
 
-5、props：传输数据的介质(水管)
-
-6、组件生命周期：
+4、组件生命周期：
 * componentWillMount
 * componentDidMount
 
-7、...{}、...[]
-
-8、组件拆分：
+5、组件拆分：
 * 自治、解耦（高内聚、低耦合）
 * 复用：抽出共有部分复用
 * 数据同时被两个组件调用，提升数据层级
+
+6、reducer拆分：
+* combineReducers()
 
 ## redux
 
@@ -67,14 +61,10 @@
 4、connect(mapStateToProps, mapDispatchToProps)(className)
 
 ## 中间件
-1、 axios
-* axios.post().then().catch()
-* 两种请求：GET、POST
-* 三个参数 method、url、params
 
-2、store => next => action => {}
+1、store => next => action => {}
 
-3、new Promise((resolve, reject) => {}).then(() => {}).catch(() => {})
+2、new Promise((resolve, reject) => {}).then(() => {}).catch(() => {})
 
 ## 路由
 1、配置路由：
@@ -93,15 +83,13 @@
 
 1、 为什么？ 
 
-* 数据多层嵌套
-
 * 查、改方便，便于维护
 
-2、 normalize、 Schema
-
-3、 扁平化规则：
+3、 Schema:
 * new Schema.Entity(' ', { }, { });
 * 扁平化的规则对应接口数据
+
+3、normalize(data, schema)
 
 
 # 结营作业(一)
