@@ -24,7 +24,7 @@ export default class Foot extends Component {
     if (choiceFlag) { // 单选
       if (selectedMusicIds.length === 0) { // 没有选中歌曲
         //
-      } else if (selectedMusicTypes.includes('推荐音乐')) { // 有选中歌曲 包括推荐歌曲 只能播放
+      } else if (selectedMusicTypes.includes(1)) { // 有选中歌曲 包括推荐歌曲 只能播放
         itemStatus.play = 'active';
       } else if (currentMusic && currentMusic.plp === undefined) { // 有选中歌曲 不包括推荐歌曲 没有plp标记
         Object.keys(itemStatus).forEach(item => {
@@ -39,7 +39,7 @@ export default class Foot extends Component {
           }
         });
       }
-    } else if (selectedMusicIds.length === 0 || selectedMusicTypes.includes('推荐音乐')) { // 多选 没有选中或包含推荐音乐
+    } else if (selectedMusicIds.length === 0 || selectedMusicTypes.includes(1)) { // 多选 没有选中或包含推荐音乐
       Object.keys(itemStatus).forEach(item => {
         itemStatus[item] = 'notActive';
       });
@@ -70,7 +70,7 @@ export default class Foot extends Component {
         delete: '推荐音乐不能删除哦！'
       };
       return onMessageShow(obj[item]);
-    } else if (selectedMusicTypes.includes('推荐音乐')) { // 单选状态 如果选中推荐音乐
+    } else if (selectedMusicTypes.includes(1)) { // 单选状态 如果选中推荐音乐
       const obj = {
         rename: '【推荐音乐】不能重命名哦！',
         cut: '【推荐音乐】不能截取哦！',
