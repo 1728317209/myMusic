@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^5.0.1",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^9.1.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
-    "eslint-loader": "^1.7.1",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.1.0"
